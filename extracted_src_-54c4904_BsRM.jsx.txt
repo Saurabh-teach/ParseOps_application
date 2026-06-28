@@ -1,0 +1,3047 @@
+Chat Edit: '
+
+
+
+
+
+
+
+
+
+
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+
+
+
+
+
+ 
+  Normal
+  0
+  false
+  
+  
+  
+  false
+  false
+  false
+  
+  EN-IN
+  X-NONE
+  X-NONE
+  
+   
+   
+   
+   
+   
+   
+   
+   
+   
+  
+  
+  
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+  
+
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+
+
+
+
+
+
+ /* Style Definitions */
+ table.MsoNormalTable
+    {mso-style-name:"Table Normal";
+    mso-tstyle-rowband-size:0;
+    mso-tstyle-colband-size:0;
+    mso-style-noshow:yes;
+    mso-style-priority:99;
+    mso-style-parent:"";
+    mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+    mso-para-margin:0cm;
+    mso-pagination:widow-orphan;
+    font-size:12.0pt;
+    font-family:"Times New Roman",serif;}
+
+
+
+
+
+
+
+ParseOps
+Product Documentation
+
+
+
+Product:
+ParseOps
+Category: Multi-tenant project management and team operations SaaS
+Application stack: Django REST Framework + React
+Documentation purpose: Product overview, functional reference, and user
+guide
+
+
+
+ 
+
+
+
+&nbsp;
+
+
+
+ 
+
+1. Introduction
+
+What is ParseOps?
+
+ParseOps is a modern project
+management and team operations platform designed
+for organizations that need structured planning, fair task distribution, and
+clear execution visibility.
+
+ 
+
+Inspired by products such as
+ClickUp, ParseOps combines workspace management,
+goals, tasks, intelligent scheduling, time tracking, reusable templates,
+contextual chat, notifications, and analytics in a single multi-page
+experience.
+
+ 
+
+Every workspace is isolated from
+other workspaces. Users may belong to multiple
+organizations, with a different role and permission set in each one.
+
+ 
+
+Key features
+
+● Multi-organization workspace support
+with Owner, Admin, and Member roles
+
+● Row-level organization isolation for
+workspace data
+
+● Custom permission overrides for
+individual workspace members
+
+● Goals, key results, linked tasks,
+progress tracking, and dependencies
+
+● Intelligent task scheduling with
+priority scoring and Smart Suggest
+
+● Strict one-active-task-per-member
+rule within each workspace
+
+● Pending Queue for unassigned work
+
+● Recently Freed Members
+recommendations using a 15-minute completion window
+
+● Time tracking through task tickets
+with start, pause, resume, and accumulated time
+
+● Task creation using impact, risk,
+priority, urgency, and effort
+
+● Workload-aware due-date planning
+with leave and overload warnings
+
+● CSV and Excel template import for
+goals, folders, documents, and tasks
+
+● Contextual real-time chat for goals
+and tasks
+
+● Direct and group chat, reactions,
+replies, typing indicators, and read status
+
+● Workspace calendar, notes,
+notifications, analytics, leave management, and recovery
+
+ 
+
+Target users
+
+ 
+
+
+ 
+  
+   
+   User group
+   
+   
+   How ParseOps helps
+   
+  
+ 
+ 
+  
+  Business owners
+  
+  
+  Organize teams, control workspace access, and monitor
+  execution
+  
+ 
+ 
+  
+  Project managers
+  
+  
+  Plan goals, prioritize work, assign tasks, and manage
+  capacity
+  
+ 
+ 
+  
+  Team leads
+  
+  
+  Balance workloads, review pending work, and track progress
+  
+ 
+ 
+  
+  Team members
+  
+  
+  Focus on one active task, track time, communicate, and
+  submit work
+  
+ 
+ 
+  
+  Operations teams
+  
+  
+  Standardize repeatable projects with templates and bulk
+  imports
+  
+ 
+ 
+  
+  Distributed teams
+  
+  
+  Collaborate through contextual chat, notifications, and
+  shared views
+  
+ 
+
+
+ 
+
+
+
+&nbsp;
+
+
+
+ 
+
+2. System Architecture
+
+Technology stack
+
+ 
+
+
+ 
+  
+   
+   Layer
+   
+   
+   Technology
+   
+  
+ 
+ 
+  
+  Frontend
+  
+  
+  React 19, Vite, Axios
+  
+ 
+ 
+  
+  Backend API
+  
+  
+  Python, Django 5.2, Django REST Framework
+  
+ 
+ 
+  
+  Authentication
+  
+  
+  Email-based accounts, OTP verification, JWT, Microsoft
+  OAuth routes
+  
+ 
+ 
+  
+  Real-time communication
+  
+  
+  Django Channels, Daphne, WebSockets
+  
+ 
+ 
+  
+  Database
+  
+  
+  PostgreSQL
+  
+ 
+ 
+  
+  Cache and presence
+  
+  
+  Redis through django-redis
+  
+ 
+ 
+  
+  API documentation
+  
+  
+  drf-spectacular, OpenAPI, Swagger UI, ReDoc
+  
+ 
+ 
+  
+  Charts and scheduling UI
+  
+  
+  Recharts, FullCalendar
+  
+ 
+ 
+  
+  Notifications
+  
+  
+  In-app notifications and Web Push with VAPID
+  
+ 
+ 
+  
+  File processing
+  
+  
+  CSV, pandas, and Excel parsing
+  
+ 
+
+
+ 
+
+High-level architecture
+
+
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+
+ 
+
+
+ 
+
+Multi-tenancy model
+
+ParseOps uses row-level
+multi-tenancy. A shared database stores all
+organizations, while organization-scoped records include an organization
+foreign key.
+
+ 
+
+Access is controlled in two
+stages:
+
+ 
+
+1. The system confirms the authenticated user has an active
+OrganizationMembership
+for the requested workspace.
+
+2. Role, custom permission, ownership, assignment, and
+sharing rules determine
+whether the user may view or change the requested record.
+
+ 
+
+
+ 
+
+
+ 
+
+
+
+Important:
+Membership and permission checks must always include the
+organization context. A user who can access one workspace must never gain
+access to another workspace's records.
+
+
+
+ 
+
+High-level folder structure
+
+         
+   
+ParseOps/    
+    |--
+backend/    
+    |   |-- config/               Django settings, root URLs,
+ASGI, and WSGI    
+    |   |-- core/                 Shared permissions and
+pagination    
+    |   |-- users/                Accounts, profiles, OTP, OAuth,
+and leave requests    
+    |   |-- organizations/        Workspaces, membership, invitations,
+and RBAC    
+    |   |-- goals/                Goals and key results    
+    |   |-- tasks/                Tasks, scheduling, tickets,
+comments, and submissions    
+    |   |-- project_templates/    Templates, folders, items, and import
+services    
+    |   |-- chat/                 Contextual chat and WebSocket
+behavior    
+    |   |-- notifications/        In-app and Web Push notifications    
+    |   |-- analytics/            Personal and team analytics    
+    |   |-- dashboard/            Dashboard and workspace application
+settings    
+    |   `-- notes/                Workspace notes    
+    |--
+frontend/    
+    |   |-- src/api.js            Shared API client and JWT refresh
+handling    
+    |   |-- src/App.jsx           Main application and workspace
+pages    
+    |   `-- src/components/       Dashboard, calendar, chat, templates,
+and task tools    
+    |--
+README.md                 Developer and
+repository overview    
+    |--
+AGENTS.md                 Coding-agent
+guidance    
+    `--
+PRODUCT_DOCUMENTATION.md  Product
+documentation    
+         
+
+ 
+
+Application page structure
+
+ParseOps is delivered as a React
+single-page application with distinct product
+pages and workspace views:
+
+ 
+
+● Authentication and onboarding
+
+● Workspace discovery and creation
+
+● Overview dashboard
+
+● Goals
+
+● Tasks and Kanban
+
+● Pending Queue
+
+● Chat
+
+● Calendar
+
+● Leave Management
+
+● Templates
+
+● Permissions
+
+● Members
+
+● Profile
+
+● History, notifications, and recovery
+
+● Workspace settings
+
+ 
+
+
+
+&nbsp;
+
+
+
+ 
+
+3. Database Concepts and Models
+
+Core relationship diagram
+
+
+ 
+
+
+ 
+
+Key models
+
+ 
+
+
+ 
+  
+   
+   Model
+   
+   
+   Purpose
+   
+   
+   Important relationships
+   
+  
+ 
+ 
+  
+  User
+  
+  
+  Global user identity and profile
+  
+  
+  Has memberships, assigned tasks, leave requests, and
+  scoring data
+  
+ 
+ 
+  
+  Organization
+  
+  
+  A workspace or tenant
+  
+  
+  Has memberships, goals, tasks, templates, chats, and
+  notifications
+  
+ 
+ 
+  
+  OrganizationMembership
+  
+  
+  Connects a user to a workspace
+  
+  
+  Stores role, active status, inviter, and custom
+  permissions
+  
+ 
+ 
+  
+  OrganizationInvitation
+  
+  
+  Records an email invitation
+  
+  
+  Belongs to an organization and inviter
+  
+ 
+ 
+  
+  OrganizationJoinRequest
+  
+  
+  Records a request to join
+  
+  
+  Belongs to an organization and requesting user
+  
+ 
+ 
+  
+  Goals
+  
+  
+  Strategic outcome or objective
+  
+  
+  Belongs to an organization; has owner, assignees, key
+  results, and tasks
+  
+ 
+ 
+  
+  KeyResult
+  
+  
+  Numeric goal measurement
+  
+  
+  Belongs to a goal and automatically contributes to goal
+  progress
+  
+ 
+ 
+  
+  Task
+  
+  
+  Unit of executable work
+  
+  
+  Belongs to an organization and optionally a goal; has one
+  assignee
+  
+ 
+ 
+  
+  TaskTicket
+  
+  
+  Assignee execution and timer record
+  
+  
+  One ticket per task and assignee combination
+  
+ 
+ 
+  
+  TaskComment
+  
+  
+  Threaded task discussion
+  
+  
+  Belongs to a task and supports replies and mentions
+  
+ 
+ 
+  
+  TaskExtensionRequest
+  
+  
+  Request for additional time
+  
+  
+  Belongs to a task and requesting user
+  
+ 
+ 
+  
+  TaskSubmission
+  
+  
+  Proof or output submitted for a task
+  
+  
+  Belongs to a task and submitting user
+  
+ 
+ 
+  
+  ProjectTemplate
+  
+  
+  Reusable project structure
+  
+  
+  Contains nested folders and items
+  
+ 
+ 
+  
+  ChatRoom
+  
+  
+  Direct, group, goal, or task conversation
+  
+  
+  Belongs to an organization and may be linked to one goal
+  or task
+  
+ 
+ 
+  
+  Notification
+  
+  
+  In-app event notification
+  
+  
+  Belongs to a user and may be scoped to an organization
+  
+ 
+ 
+  
+  LeaveRequest
+  
+  
+  Team member availability record
+  
+  
+  Belongs to a user and organization
+  
+ 
+
+
+ 
+
+Organization and membership
+
+An Organization is the top-level tenant
+boundary. A user accesses a workspace
+through one unique OrganizationMembership.
+
+ 
+
+Important organization fields:
+
+ 
+
+● id: UUID primary key
+
+● name and slug: workspace identity
+
+● owner: primary owning user
+
+● is_active: supports deactivation and reactivation
+
+● is_public: controls discoverability
+
+● onboarding_completed: records workspace setup
+progress
+
+ 
+
+Important membership fields:
+
+ 
+
+● organization and user
+
+● role: owner, admin, or member
+
+● custom_permissions: per-member permission overrides
+
+● is_active: controls current workspace access
+
+● invited_by and joined_at
+
+ 
+
+The system prevents deletion or
+demotion of the last active workspace owner.
+
+ 
+
+Goal model
+
+Important goal fields:
+
+ 
+
+
+ 
+  
+   
+   Field
+   
+   
+   Purpose
+   
+  
+ 
+ 
+  
+  organization
+  
+  
+  Workspace ownership and tenant isolation
+  
+ 
+ 
+  
+  title,
+  description
+  
+  
+  Goal identity and context
+  
+ 
+ 
+  
+  owner,
+  created_by
+  
+  
+  Accountability and authorship
+  
+ 
+ 
+  
+  assignees,
+  shared_viewers
+  
+  
+  Collaboration and sharing
+  
+ 
+ 
+  
+  start_date,
+  due_date, timeframe
+  
+  
+  Goal schedule
+  
+ 
+ 
+  
+  progress,
+  status, priority
+  
+  
+  Goal health and execution state
+  
+ 
+ 
+  
+  parent,
+  depends_on
+  
+  
+  Goal hierarchy and dependency
+  
+ 
+ 
+  
+  sharing_option,
+  visibility_type,
+  visible_to
+  
+  
+  Access control
+  
+ 
+ 
+  
+  template_type
+  
+  
+  Template classification
+  
+ 
+ 
+  
+  is_deleted
+  
+  
+  Soft-delete and recovery
+  
+ 
+
+
+ 
+
+Goal progress is calculated from
+key results when key results exist. Otherwise,
+ParseOps falls back to the completion rate of linked tasks.
+
+ 
+
+Task model
+
+Important task fields:
+
+ 
+
+
+ 
+  
+   
+   Field
+   
+   
+   Purpose
+   
+  
+ 
+ 
+  
+  organization
+  
+  
+  Workspace ownership and tenant isolation
+  
+ 
+ 
+  
+  goal
+  
+  
+  Optional link to a strategic goal
+  
+ 
+ 
+  
+  title,
+  description, issue_type
+  
+  
+  Task identity and type
+  
+ 
+ 
+  
+  assignee
+  
+  
+  Single responsible member
+  
+ 
+ 
+  
+  watchers,
+  shared_viewers,
+  visible_to
+  
+  
+  Collaboration and visibility
+  
+ 
+ 
+  
+  status
+  
+  
+  backlog,
+  todo, in_progress, in_review, testing, or done
+  
+ 
+ 
+  
+  priority
+  
+  
+  low,
+  medium, or high
+  
+ 
+ 
+  
+  impact
+  
+  
+  Business impact score, normally from 1 to 10
+  
+ 
+ 
+  
+  risk
+  
+  
+  low,
+  medium, or high
+  
+ 
+ 
+  
+  estimated_hours,
+  estimated_minutes
+  
+  
+  Planned effort
+  
+ 
+ 
+  
+  actual_time_spent_minutes,
+  actual_hours
+  
+  
+  Recorded execution time
+  
+ 
+ 
+  
+  start_date,
+  due_date, due_time
+  
+  
+  Planned schedule
+  
+ 
+ 
+  
+  reminder_preference
+  
+  
+  Due-date notification timing
+  
+ 
+ 
+  
+  required_assignees
+  
+  
+  Scheduling input retained for group-task planning
+  
+ 
+ 
+  
+  sharing_option,
+  visibility_type
+  
+  
+  Access and sharing
+  
+ 
+ 
+  
+  is_deleted,
+  is_overdue, is_blocked
+  
+  
+  Operational state
+  
+ 
+
+
+ 
+
+Although required_assignees exists for scheduling
+input, the current primary
+task relationship stores one active assignee, and one TaskTicket is retained
+for that assignee.
+
+ 
+
+Task and task-ticket relationship
+
+
+ 
+
+
+ 
+
+
+
+&nbsp;
+
+
+
+ 
+
+4. User Roles and Permissions
+
+Role overview
+
+ 
+
+
+ 
+  
+   
+   Capability
+   
+   
+   Owner
+   
+   
+   Admin
+   
+   
+   Member
+   
+  
+ 
+ 
+  
+  Create a workspace
+  
+  
+  Yes
+  
+  
+  Yes, as owner of the new workspace
+  
+  
+  Yes, as owner of the new workspace
+  
+ 
+ 
+  
+  View active joined workspaces
+  
+  
+  Yes        
+  
+  
+  Yes
+  
+  
+  Yes
+  
+ 
+ 
+  
+  Update workspace settings
+  
+  
+  Yes
+  
+  
+  Yes
+  
+  
+  No by default
+  
+ 
+ 
+  
+  Deactivate, reactivate, or permanently delete workspace
+  
+  
+  Yes
+  
+  
+  No
+  
+  
+  No
+  
+ 
+ 
+  
+  Invite members
+  
+  
+  Yes
+  
+  
+  Yes
+  
+  
+  No by default
+  
+ 
+ 
+  
+  Review join requests
+  
+  
+  Yes
+  
+  
+  Yes
+  
+  
+  No
+  
+ 
+ 
+  
+  Remove members
+  
+  
+  Yes
+  
+  
+  Yes, except protected admins/owners
+  
+  
+  No
+  
+ 
+ 
+  
+  Change member roles
+  
+  
+  Yes
+  
+  
+  No
+  
+  
+  No
+  
+ 
+ 
+  
+  Change custom permissions
+  
+  
+  Yes
+  
+  
+  Yes, with hierarchy restrictions
+  
+  
+  No
+  
+ 
+ 
+  
+  View all workspace goals and tasks
+  
+  
+  Yes
+  
+  
+  Yes
+  
+  
+  Only visible or related records by default
+  
+ 
+ 
+  
+  Create workspace goals
+  
+  
+  Yes
+  
+  
+  Yes
+  
+  
+  Yes by default
+  
+ 
+ 
+  
+  Create workspace tasks
+  
+  
+  Yes
+  
+  
+  Yes
+  
+  
+  Yes by default
+  
+ 
+ 
+  
+  Assign tasks
+  
+  
+  Yes
+  
+  
+  Yes
+  
+  
+  No by default
+  
+ 
+ 
+  
+  Edit any goal or task
+  
+  
+  Yes
+  
+  
+  Yes
+  
+  
+  No by default
+  
+ 
+ 
+  
+  Update own/assigned task status
+  
+  
+  Yes
+  
+  
+  Yes
+  
+  
+  Yes
+  
+ 
+ 
+  
+  Delete workspace goals or tasks
+  
+  
+  Yes
+  
+  
+  Yes
+  
+  
+  No by default
+  
+ 
+ 
+  
+  Manage task comments and attachments
+  
+  
+  Yes
+  
+  
+  Yes
+  
+  
+  Yes by default
+  
+ 
+ 
+  
+  Review task extension requests
+  
+  
+  Yes
+  
+  
+  Yes
+  
+  
+  No
+  
+ 
+ 
+  
+  View team analytics and team calendar
+  
+  
+  Yes
+  
+  
+  Yes
+  
+  
+  Restricted to personal/visible data
+  
+ 
+
+
+ 
+
+Custom permissions
+
+Owners and admins can apply
+custom permission overrides to members. Examples
+include:
+
+ 
+
+● Create workspace goals or tasks
+
+● View all goals or tasks
+
+● Edit or delete goals and tasks
+
+● Manage goal or task visibility
+
+● Assign goals or tasks
+
+● Manage comments and attachments
+
+● Invite, remove, or manage workspace
+members
+
+● View member profiles
+
+● Manage workspace settings
+
+ 
+
+Owner authority is protected.
+Admins cannot modify an owner's permissions or
+manage peer admins where owner authority is required.
+
+ 
+
+Visibility rules
+
+Goals and tasks support three
+sharing options:
+
+ 
+
+
+ 
+  
+   
+   Sharing option
+   
+   
+   Typical behavior
+   
+  
+ 
+ 
+  
+  Organization
+  
+  
+  Active workspace members can view the record
+  
+ 
+ 
+  
+  Specific
+  
+  
+  Only explicitly related users and permitted managers can
+  view it
+  
+ 
+ 
+  
+  Private
+  
+  
+  Limited to the creator/owner/assignee and permitted
+  managers
+  
+ 
+
+
+ 
+
+
+
+&nbsp;
+
+
+
+ 
+
+5. Core Features Documentation
+
+5.1 Organization and workspace management
+
+A workspace groups members,
+goals, tasks, templates, chats, notifications, and
+analytics under one tenant boundary.
+
+ 
+
+Owners and admins can:
+
+ 
+
+● Configure workspace information
+
+● Invite members with a selected role
+
+● Review join requests
+
+● Remove or restore members
+
+● Review workspace history
+
+● Manage member permissions
+
+ 
+
+Owners can additionally:
+
+ 
+
+● Promote or demote roles while
+protecting the final active owner
+
+● Deactivate and reactivate the
+workspace
+
+● Permanently delete the workspace
+
+ 
+
+When a member is removed, their
+membership is marked inactive. They can still
+sign in globally but immediately lose access to that workspace, including its
+WebSocket chat connection.
+
+ 
+
+5.2 Goals management
+
+Goals represent strategic
+outcomes. Each goal can include:
+
+ 
+
+● An owner and multiple assignees
+
+● Start and due dates
+
+● Priority, timeframe, and status
+
+● Parent goals and dependencies
+
+● Key results
+
+● Linked tasks
+
+● Nested folders and
+template-generated content
+
+● Organization, specific-user, or
+private sharing
+
+● A dedicated contextual chat room
+
+ 
+
+Goal progress behavior:
+
+ 
+
+1. If the goal has key results, progress is the average
+key-result progress.
+
+2. If no key results exist, progress is based on linked task
+completion.
+
+3. At 100%, the goal becomes completed.
+
+4. Between 0% and 100%, the goal becomes in_progress.
+
+ 
+
+5.3 Task management
+
+Tasks are executable units of
+work. They may be created independently or linked
+to a goal.
+
+ 
+
+Task creation
+
+A task can include:
+
+ 
+
+● Title and description
+
+● Task, story, or bug type
+
+● Goal link
+
+● Manual assignee or Smart Suggest
+selection
+
+● Watchers and shared viewers
+
+● Priority, impact, risk, and
+estimated effort
+
+● Start date, due date, due time, and
+reminders
+
+● Sharing and visibility settings
+
+ 
+
+If a task is created without an
+assignee, ParseOps attempts to run the
+scheduling engine for pending unassigned tasks in that workspace.
+
+ 
+
+Assignment
+
+The current task model uses one
+responsible assignee. Assignment is validated
+against active workspace membership.
+
+ 
+
+Members cannot assign tasks to
+owners or admins through the regular member
+assignment flow. Assignment and reassignment actions remain subject to role,
+custom permission, creator, and goal-owner checks.
+
+ 
+
+Task lifecycle
+
+
+ 
+
+
+ 
+
+Tasks also support comments,
+threaded replies, mentions, attachments, extension
+requests, feedback, submissions, reminders, overdue detection, soft deletion,
+and recovery.
+
+ 
+
+5.4 Intelligent Task Scheduling Engine
+
+The scheduling engine
+prioritizes unassigned work and ranks active workspace
+members using task importance, employee suitability, fatigue, and workload
+balance.
+
+ 
+
+Scheduling inputs
+
+Task scoring considers:
+
+ 
+
+● Impact
+
+● Priority
+
+● Risk
+
+● Urgency based on due date
+
+● Estimated effort
+
+ 
+
+         
+    Task Score
+=    
+      (0.35 ×
+Impact + 0.25 × Priority + 0.20 × Risk + 0.20 × Urgency)    
+      ÷
+sqrt(Effort)    
+         
+
+ 
+
+Employee scoring considers:
+
+ 
+
+● Past performance
+
+● Experience
+
+● Efficiency
+
+● Availability and approved leave
+
+● Current workload
+
+ 
+
+The final assignment score
+applies fatigue and workload balancing:
+
+ 
+
+         
+    Load
+Balance Factor = max(0.2, 1 - Assigned Hours / 8)    
+         
+    Final
+Match Score =    
+      Task
+Score × Employee Score × (1 - Fatigue Penalty) × Load Balance Factor    
+         
+
+ 
+
+Scheduler flow
+
+
+ 
+
+
+ 
+
+Smart Suggest
+
+Smart Suggest is available while
+creating or editing tasks. It:
+
+ 
+
+1. Builds a temporary task profile using effort, priority,
+impact, and risk.
+
+2. Scores active members against that task.
+
+3. Ranks candidates by match score.
+
+4. Displays reasons such as low workload, excellent
+performance, experience,
+balanced score, or busy status.
+
+5. Allows an authorized user to choose the recommendation or
+manually select a
+different member.
+
+ 
+
+Smart Suggest is advisory. The
+user making the assignment remains responsible
+for reviewing availability and the reason shown.
+
+ 
+
+One Member = One Active Task
+
+ParseOps enforces a strict focus
+rule within each workspace:
+
+ 
+
+
+
+A member
+cannot start a second task while another task or task ticket is
+already in_progress in
+the same workspace.
+
+
+
+ 
+
+To start another task, the
+member or an authorized manager must first pause the
+current task, move it to another status, or complete it.
+
+ 
+
+This rule applies when:
+
+ 
+
+● Updating a task to in_progress
+
+● Starting or resuming a task ticket
+
+● Quick-assigning work where an
+in-progress conflict exists
+
+ 
+
+Fairness approach
+
+The scheduler promotes fair
+distribution by:
+
+ 
+
+● Rejecting members who already have
+an active in-progress task during automatic scheduling
+
+● Excluding members at or above the
+6.5-hour active-capacity threshold
+
+● Reducing scores as workload and
+fatigue increase
+
+● Considering leave and availability
+
+● Recalculating availability after
+every assignment
+
+● Showing busy status and explanatory
+reasons in suggestions
+
+ 
+
+5.5 Pending Queue and bulk scheduling
+
+The Pending Queue displays tasks
+that:
+
+ 
+
+● Have no assignee
+
+● Are not complete
+
+● Are not soft-deleted
+
+ 
+
+Pending work is ordered by
+priority in the current UI. Each queue item shows
+task details, goal context, estimated effort, due date, and a suggested member
+when available.
+
+ 
+
+Authorized users can:
+
+ 
+
+● Assign the suggested member
+
+● Select another member
+
+● Review why a member was recommended
+
+● Refresh the queue after assignments
+
+ 
+
+Automatic scheduling processes
+the complete set of pending unassigned tasks,
+orders them by Task Score, and assigns them sequentially when eligible members
+are available.
+
+ 
+
+5.6 Check Free Members: 15-minute logic
+
+The Recently Freed Members
+tool identifies members whose task ticket changed
+to done within the
+last 15 minutes.
+
+ 
+
+For each recently freed member,
+ParseOps:
+
+ 
+
+1. Finds pending unassigned tasks.
+
+2. Calculates the member's match score for each task.
+
+3. Sorts recommendations from strongest to weakest.
+
+4. Displays up to five recommended tasks.
+
+5. Allows an authorized user to assign a recommendation
+immediately.
+
+ 
+
+This creates a short operational
+window for quickly moving available capacity
+to the next suitable task.
+
+ 
+
+5.7 Time tracking system
+
+Each assigned task has a TaskTicket for
+the responsible member. The ticket
+stores execution status and accumulated time_spent_minutes.
+
+ 
+
+Start, pause, and resume
+
+● Start: Move the ticket to in_progress.
+The one-active-task rule is checked.
+
+● Pause: Move the ticket back
+to todo and add
+the elapsed session time.
+
+● Resume: Move the ticket to in_progress
+again. Previously accumulated time remains.
+
+● Review/complete: Move the
+ticket to the appropriate later status.
+
+ 
+
+The frontend displays a live
+seconds counter while a ticket is in progress.
+Elapsed session minutes are added to the persisted ticket time when the status
+changes.
+
+ 
+
+Additional time controls:
+
+ 
+
+● Idle in-progress tickets may be
+auto-paused after eight hours.
+
+● The auto-pause adds eight hours to
+the ticket and notifies the member.
+
+● ParseOps can notify the member and
+task creator when tracked time exceeds the
+assigned effort budget.
+
+● Owners and admins can update any
+ticket; members can update their own tickets.
+
+ 
+
+5.8 Template and CSV/Excel import system
+
+Project templates provide
+reusable structures for repeatable work.
+
+ 
+
+A template can contain:
+
+ 
+
+● Nested folders
+
+● Documents
+
+● Checklists
+
+● Task lists
+
+● Files
+
+● Links
+
+● Standard tasks
+
+● Placeholder values
+
+ 
+
+Templates may be public to the
+workspace or private to their creator. They can
+be applied to an existing goal or used to create goal content and linked tasks.
+
+ 
+
+Template-file import
+
+The template import parser
+supports .csv, .xls, and .xlsx files. It
+can
+convert spreadsheet rows into nested folders, documents, and task items.
+
+ 
+
+Common template-import columns:
+
+ 
+
+
+ 
+  
+   
+   Column
+   
+   
+   Purpose
+   
+  
+ 
+ 
+  
+  Goal_Title
+  
+  
+  Goal associated with the imported structure
+  
+ 
+ 
+  
+  Folder_Name
+  
+  
+  Folder path; / or &gt; can represent nesting
+  
+ 
+ 
+  
+  Document_Name
+  
+  
+  Document item title
+  
+ 
+ 
+  
+  Document_Content
+  
+  
+  Document body
+  
+ 
+ 
+  
+  Task_Title
+  
+  
+  Task item title
+  
+ 
+ 
+  
+  Task_Description
+  
+  
+  Task details
+  
+ 
+ 
+  
+  Est_Hours
+  
+  
+  Estimated effort
+  
+ 
+ 
+  
+  Assignee_Email
+  
+  
+  Proposed assignee
+  
+ 
+ 
+  
+  Priority
+  
+  
+  Task priority
+  
+ 
+ 
+  
+  Impact
+  
+  
+  Task impact
+  
+ 
+ 
+  
+  Risk
+  
+  
+  Task risk
+  
+ 
+
+
+ 
+
+Direct bulk CSV import
+
+The direct bulk-import flow
+creates goals and linked tasks using rows with a
+Type of goal or task. Task rows
+can reference a parent goal title.
+Impact and risk are required for task rows in this flow.
+
+ 
+
+Before importing:
+
+ 
+
+● Verify member email addresses.
+
+● Use supported priority and risk
+values.
+
+● Confirm goal titles are unique and
+correctly referenced.
+
+● Preview the parsed hierarchy before
+applying it.
+
+ 
+
+5.9 Contextual chat
+
+ParseOps supports direct, group,
+goal, and task chat rooms.
+
+ 
+
+Goal chat rooms are created
+automatically with goals. Task chat rooms and names
+are synchronized with task context where configured.
+
+ 
+
+Chat capabilities include:
+
+ 
+
+● Real-time messages over WebSockets
+
+● Organization membership validation
+
+● Replies
+
+● Typing indicators
+
+● Read status
+
+● Emoji reactions
+
+● File attachments
+
+● URL previews
+
+● Edit own messages within ten minutes
+
+● Soft-delete own messages
+
+● Online presence and last-seen status
+
+ 
+
+Contextual chat keeps discussion
+attached to the work item instead of separating
+conversation from execution.
+
+ 
+
+
+
+&nbsp;
+
+
+
+ 
+
+6. User Workflows
+
+6.1 Create an organization
+
+1. Sign in to ParseOps.
+
+2. Open the workspace selection or onboarding page.
+
+3. Select Create Workspace.
+
+4. Enter the workspace name, description, logo, and
+visibility settings.
+
+5. Submit the form.
+
+6. ParseOps creates the workspace and assigns you the Owner
+role.
+
+7. Complete onboarding and open the workspace dashboard.
+
+ 
+
+
+
+Screenshot
+description: Workspace creation page showing the workspace name,
+description, logo upload, visibility setting, and primary Create Workspace
+button.
+
+
+
+ 
+
+6.2 Invite members
+
+1. Open the target workspace.
+
+2. Navigate to Members or Permissions.
+
+3. Select Invite Member.
+
+4. Enter the member's email address.
+
+5. Choose Admin
+or Member or Owner
+as the initial role.
+
+6. Add an optional invitation message.
+
+7. Send the invitation.
+
+8. Review the member in the workspace member list and adjust
+custom permissions
+if needed.
+
+ 
+
+If the email does not belong to
+an existing user, ParseOps creates an account
+with a temporary password and requires a password change on first login.
+
+ 
+
+
+
+Screenshot
+description: Invite-member modal with email, role selector,
+custom message field, and Send Invitation action.
+
+
+
+ 
+
+6.3 Create and assign a task manually
+
+1. Open Tasks or a goal's task section.
+
+2. Select Create Task.
+
+3. Enter a title and description.
+
+4. Choose the task type, linked goal, priority(High,Medium,Low),
+impact, risk, and estimated effort.
+
+5. Set dates, reminders, sharing, watchers, and visibility.
+
+6. Choose Manual Assignment.
+
+7. Select an active workspace member.
+
+8. Review workload or due-date warnings.
+
+9. Create the task.
+
+ 
+
+
+
+Screenshot
+description: Task creation form with planning fields on the left
+and assignment, sharing, and scheduling controls on the right.
+
+
+
+ 
+
+6.4 Create and assign a task with Smart
+Suggest
+
+1. Open the task creation or edit page.
+
+2. Enter priority, impact, risk, and estimated effort.
+
+3. Open the assignment selector.
+
+4. Choose Smart Suggest.
+
+5. Wait while ParseOps analyzes candidate match scores.
+
+6. Review the recommended member, score, busy/free
+indicator, and reason.
+
+7. Select the recommended member or another ranked
+suggestion.
+
+8. Save the task.
+
+ 
+
+
+
+Screenshot
+description: Smart Suggest panel showing a featured
+recommendation, match score, reason, busy/free badge, and ranked candidate
+list.
+
+
+
+ 
+
+6.5 Use the Pending Queue
+
+1. Open a workspace.
+
+2. Select Pending Queue from the workspace
+navigation.
+
+3. Review unassigned tasks ordered by priority.
+
+4. Inspect each task's estimated effort, due date, goal, and
+suggested member.
+
+5. Select Assign Suggested to accept the
+recommendation.
+
+6. Alternatively, choose another member and select Change.
+
+7. Refresh or revisit the queue to confirm the task is no
+longer pending.
+
+ 
+
+
+
+Screenshot
+description: Pending Queue page with task cards on the left and
+suggestion, match score, reason, and assignment controls on the right.
+
+
+
+ 
+
+6.6 Use Check Free Members
+
+1. Open the Recently Freed Members tool from the
+workspace task area.
+
+2. ParseOps checks for members who completed a task in the
+last 15 minutes.
+
+3. Review each member's recently completed task and
+recommended pending tasks.
+
+4. Compare match scores and recommendation reasons.
+
+5. Select Assign Now for the preferred task.
+
+ 
+
+
+
+Screenshot
+description: Recently Freed Members modal showing a completed
+task badge and up to five recommended next tasks for each member.
+
+
+
+ 
+
+6.7 Use time tracking
+
+1. Open Tasks or the Kanban view.
+
+2. Find your assigned task ticket.
+
+3. Select Start or move the ticket to In Progress.
+
+4. Work while the live timer runs.
+
+5. Select Pause to stop the active session and
+preserve accumulated time.
+
+6. Select Resume to continue later.
+
+7. Move the ticket to In Review, Testing, or Done
+as work progresses.
+
+ 
+
+If another task is already in
+progress in the same workspace, ParseOps blocks
+the new start and asks you to pause or complete the active task first.
+
+ 
+
+
+
+Screenshot
+description: Kanban ticket showing status controls, accumulated
+hours and minutes, and a live seconds indicator while in progress.
+
+
+
+ 
+
+6.8 Import a template from CSV or Excel
+
+1. Open Templates.
+
+2. Select Import File.
+
+3. Upload a supported CSV or Excel workbook.
+
+4. Review parsed goals, folder hierarchy, documents, and
+task items.
+
+5. Correct unsupported values or missing data.
+
+6. Save the reusable template or apply it to a goal.
+
+7. Review the resulting goals and tasks before assigning
+work.
+
+ 
+
+
+
+Screenshot
+description: Import preview displaying spreadsheet rows,
+generated nested folders, documents, and tasks before confirmation.
+
+
+
+ 
+
+
+
+&nbsp;
+
+
+
+ 
+
+7. Best Practices and Tips
+
+For Owners and Admins
+
+● Create one workspace per operational
+boundary that needs separate membership
+and data isolation.
+
+● Keep at least two trusted owners
+when possible to avoid ownership lockout.
+
+● Use Admin for operational managers
+and reserve Owner for workspace governance.
+
+● Review custom permissions regularly
+instead of granting broad access permanently.
+
+● Require impact, risk, priority, and
+effort before using Smart Suggest.
+
+● Review the Pending Queue daily to
+prevent unassigned work from becoming invisible.
+
+● Use Check Free Members after major
+completions or during active delivery windows.
+
+● Respect Smart Suggest as a
+recommendation; confirm context, skill fit, and team
+commitments before assigning.
+
+● Use templates for repeatable project
+structures and validate imports in a small
+workspace before large-scale use.
+
+● Review extension requests, overdue
+alerts, time overruns, and leave schedules
+before changing assignments.
+
+● Use specific or private sharing only
+when required; overly restrictive sharing
+can reduce team visibility.
+
+ 
+
+For Team Members
+
+● Keep only one task in progress and
+pause it before switching context.
+
+● Update status as work moves from
+execution to review, testing, and completion.
+
+● Use comments and contextual chat to
+keep decisions attached to the relevant work.
+
+● Mention teammates in comments only
+when their attention is required.
+
+● Track time consistently so workload
+and scheduling recommendations remain useful.
+
+● Submit task proof, files, or links
+before completing work when required.
+
+● Request an extension early and
+include a clear reason.
+
+● Keep profile, availability, and
+leave information current.
+
+● Review notifications and workspace
+history regularly.
+
+ 
+
+Data quality tips
+
+● Use clear, action-oriented task
+titles.
+
+● Estimate effort in hours or minutes
+before assignment.
+
+● Use impact to represent business
+value and risk to represent delivery uncertainty.
+
+● Set realistic due dates and respond
+to overload warnings.
+
+● Link tasks to goals when the work
+contributes to a strategic outcome.
+
+● Keep imported goal titles and
+assignee emails consistent.
+
+
+
+&nbsp;
+
+
+
+ 
+
+Product Terminology
+
+ 
+
+
+ 
+  
+   
+   Term
+   
+   
+   Meaning
+   
+  
+ 
+ 
+  
+  Workspace / Organization
+  
+  
+  Tenant boundary containing members and operational data
+  
+ 
+ 
+  
+  Membership
+  
+  
+  A user's role and permissions inside one workspace
+  
+ 
+ 
+  
+  Goal
+  
+  
+  Strategic outcome measured by key results or linked tasks
+  
+ 
+ 
+  
+  Key Result
+  
+  
+  Numeric measure used to calculate goal progress
+  
+ 
+ 
+  
+  Task
+  
+  
+  Executable work item linked optionally to a goal
+  
+ 
+ 
+  
+  Task Ticket
+  
+  
+  Assignee-specific execution status and accumulated time
+  
+ 
+ 
+  
+  Pending Queue
+  
+  
+  Unassigned tasks waiting for assignment
+  
+ 
+ 
+  
+  Smart Suggest
+  
+  
+  Ranked member recommendation for a task
+  
+ 
+ 
+  
+  Recently Freed Member
+  
+  
+  Member who completed a task ticket within the last 15
+  minutes
+  
+ 
+ 
+  
+  Contextual Chat
+  
+  
+  Chat room linked directly to a goal or task
+  
+ 
+ 
+  
+  Custom Permission
+  
+  
+  Workspace-specific override applied to a member
+  
+ 
+
+
+ 
+
+
+
+&nbsp;
+
+
+
+ 
+
+ 
+
+
+
+
+
+make fronted '

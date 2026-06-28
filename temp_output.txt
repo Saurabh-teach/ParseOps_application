@@ -1,0 +1,100 @@
+                                  const response = await getSmartSuggest(selectedOrg.id, params);
+
+
+
+                                  setCreateSmartSuggestions(response.suggestions || []);
+
+
+
+                                } catch (err) {
+
+
+
+                                  console.error(err);
+
+
+
+                                  setCreateSmartSuggestError("Failed to fetch suggestions.");
+
+
+
+                                } finally {
+
+
+
+                                  setCreateSmartSuggestLoading(false);
+
+
+
+                                }
+
+
+
+                              }}
+
+
+
+                              style={{
+
+
+
+                                padding: '0.4rem 1rem',
+
+
+
+                                fontSize: '0.8rem',
+
+
+
+                                border: 'none',
+
+
+
+                                background: createAssignMode === 'suggest' ? '#6366f1' : 'white',
+
+
+
+                                color: createAssignMode === 'suggest' ? 'white' : '#475569',
+
+
+
+                                fontWeight: 500,
+
+
+
+                                cursor: 'pointer',
+
+
+
+                                transition: 'all 0.2s'
+
+
+
+                              }}
+
+
+
+                            >
+
+
+
+                              Smart Suggest
+
+
+
+                            </button>
+
+
+
+                          </div>
+
+
+
+                          */}
+
+
+
+
+
+
+

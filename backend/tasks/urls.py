@@ -1,0 +1,60 @@
+from django.urls import path
+from tasks.views import (
+    CreateTaskView, TaskListView, TaskDetailView, UpdateTaskStatusView,
+    SoftDeleteTaskView, TrashView, RestoreTaskView, 
+    TaskCommentsListView, CreateTaskCommentView, ReplyToCommentView, TaskCommentDetailView, TaskAttachmentUploadView,
+    BulkTaskUpdateView, QuickAssignTaskView, FilteredTasksView, RemoveTaskAssigneeView,
+    TaskPlanningHelperView, TaskKanbanView, UpdateTaskTicketStatusView,
+    TaskExtensionRequestView, TaskExtensionListView, TaskExtensionReviewView,
+    CreateTaskFeedbackView, TaskSubmissionView,
+    # Commented: Smart Suggestion Feature
+    # SmartSuggestAssigneeView, CheckFreeMembersView,
+    # AssignSuggestedView, 
+    ChangeAssigneeView, 
+    # BulkScheduleView,
+    # PreviewScheduleView, ApplyScheduleView
+    ManualScheduleView,
+    SchedulePreviewView,
+    RunSchedulerView,
+    ImportTasksCSVView
+)
+
+urlpatterns = [
+    path('tasks/create/', CreateTaskView.as_view(), name='create-standalone-task'),
+    path('goals/<uuid:goal_id>/tasks/create/', CreateTaskView.as_view(), name='create-task'),
+    path('organizations/<uuid:org_id>/tasks/', TaskListView.as_view(), name='task-list'),
+    path('tasks/<uuid:task_id>/', TaskDetailView.as_view(), name='task-detail'),
+    path('tasks/<uuid:task_id>/update-status/', UpdateTaskStatusView.as_view(), name='update-task-status'),
+    path('tasks/<uuid:task_id>/soft-delete/', SoftDeleteTaskView.as_view(), name='soft-delete-task'),
+    path('organizations/<uuid:org_id>/trash/', TrashView.as_view(), name='trash-list'),
+    path('tasks/<uuid:task_id>/restore/', RestoreTaskView.as_view(), name='restore-task'),
+    path('tasks/<uuid:task_id>/comments/', TaskCommentsListView.as_view(), name='task-comments-list'),
+    path('tasks/<uuid:task_id>/comments/create/', CreateTaskCommentView.as_view(), name='create-task-comment'),
+    path('comments/<uuid:comment_id>/', TaskCommentDetailView.as_view(), name='task-comment-detail'),
+    path('comments/<uuid:comment_id>/reply/', ReplyToCommentView.as_view(), name='reply-to-comment'),
+    path('tasks/<uuid:task_id>/attachments/upload/', TaskAttachmentUploadView.as_view(), name='upload-attachment'),
+    path('organizations/<uuid:org_id>/tasks/bulk-update/', BulkTaskUpdateView.as_view(), name='bulk-task-update'),
+    path('quick-assign-task/', QuickAssignTaskView.as_view(), name='quick-assign-task'),
+    path('organizations/<uuid:org_id>/tasks/filter/', FilteredTasksView.as_view(), name='filtered-tasks'),
+    path('tasks/<uuid:task_id>/remove-assignee/', RemoveTaskAssigneeView.as_view(), name='remove-task-assignee'),
+    path('tasks/planning-helper/', TaskPlanningHelperView.as_view(), name='task-planning-helper'),
+    path('organizations/<uuid:org_id>/tasks/kanban/', TaskKanbanView.as_view(), name='task-kanban'),
+    path('tasks/tickets/<uuid:ticket_id>/update-status/', UpdateTaskTicketStatusView.as_view(), name='update-task-ticket-status'),
+    path('tasks/<uuid:task_id>/extension-request/', TaskExtensionRequestView.as_view(), name='task-extension-request'),
+    path('organizations/<uuid:org_id>/extension-requests/', TaskExtensionListView.as_view(), name='task-extension-requests-list'),
+    path('extension-requests/<uuid:pk>/review/', TaskExtensionReviewView.as_view(), name='task-extension-request-review'),
+    path('tasks/<uuid:task_id>/feedback/', CreateTaskFeedbackView.as_view(), name='task-feedback'),
+    path('tasks/<uuid:task_id>/submit/', TaskSubmissionView.as_view(), name='task-submit'),
+    # Commented: Smart Suggestion Feature
+    # path('organizations/<uuid:org_id>/tasks/smart-suggest/', SmartSuggestAssigneeView.as_view(), name='task-smart-suggest'),
+    # path('organizations/<uuid:org_id>/tasks/check-free-members/', CheckFreeMembersView.as_view(), name='task-check-free-members'),
+    # path('organizations/<uuid:org_id>/tasks/assign-suggested/', AssignSuggestedView.as_view(), name='assign-suggested'),
+    path('tasks/<uuid:task_id>/change-assignee/', ChangeAssigneeView.as_view(), name='change-assignee'),
+    path('organizations/<uuid:org_id>/tasks/manual-schedule/', ManualScheduleView.as_view(), name='manual-schedule'),
+    path('organizations/<uuid:org_id>/tasks/schedule-preview/', SchedulePreviewView.as_view(), name='schedule-preview'),
+    path('organizations/<str:org_slug>/tasks/run_scheduler/', RunSchedulerView.as_view(), name='run-scheduler'),
+    path('organizations/<str:org_slug>/tasks/import_csv/', ImportTasksCSVView.as_view(), name='import-csv'),
+    # path('organizations/<uuid:org_id>/tasks/bulk-schedule/', BulkScheduleView.as_view(), name='bulk-schedule'),
+    # path('organizations/<uuid:org_id>/tasks/apply-schedule/', ApplyScheduleView.as_view(), name='apply-schedule'),
+]
+

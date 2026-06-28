@@ -1,0 +1,82 @@
+[
+  {
+    "path": "eslint.config.js",
+    "current_bytes": 579,
+    "current_mtime": "2026-06-19T15:09:40"
+  },
+  {
+    "path": "public/sw.js",
+    "current_bytes": 1487,
+    "current_mtime": "2026-06-19T15:09:40"
+  },
+  {
+    "path": "src/api.js",
+    "current_bytes": 21964,
+    "current_mtime": "2026-06-19T11:43:02"
+  },
+  {
+    "path": "src/components/BackButton.jsx",
+    "current_bytes": 630,
+    "current_mtime": "2026-06-19T15:09:40"
+  },
+  {
+    "path": "src/components/CalendarView.jsx",
+    "current_bytes": 4554,
+    "current_mtime": "2026-06-19T15:09:40"
+  },
+  {
+    "path": "src/components/Chat/ChatLayout.jsx",
+    "current_bytes": 41541,
+    "current_mtime": "2026-06-19T15:09:40"
+  },
+  {
+    "path": "src/components/Chat/ContextualChat.jsx",
+    "current_bytes": 22592,
+    "current_mtime": "2026-06-19T15:09:40"
+  },
+  {
+    "path": "src/components/CheckFreeMembersModal.jsx",
+    "current_bytes": 12258,
+    "current_mtime": "2026-06-19T15:09:40"
+  },
+  {
+    "path": "src/components/Dashboard.jsx",
+    "current_bytes": 62915,
+    "current_mtime": "2026-06-19T15:09:40"
+  },
+  {
+    "path": "src/components/ExtensionRequestsModal.jsx",
+    "current_bytes": 13053,
+    "current_mtime": "2026-06-19T15:09:40"
+  },
+  {
+    "path": "src/components/PendingQueueView.jsx",
+    "current_bytes": 33395,
+    "current_mtime": "2026-06-19T15:09:40"
+  },
+  {
+    "path": "src/components/ScheduleTasksModal.jsx",
+    "current_bytes": 19304,
+    "current_mtime": "2026-06-19T15:09:40"
+  },
+  {
+    "path": "src/components/TaskExtensionModal.jsx",
+    "current_bytes": 7470,
+    "current_mtime": "2026-06-19T15:09:40"
+  },
+  {
+    "path": "src/components/TaskFeedbackModal.jsx",
+    "current_bytes": 8291,
+    "current_mtime": "2026-06-19T15:09:40"
+  },
+  {
+    "path": "src/components/Templates/TemplateManager.jsx",
+    "current_bytes": 62225,
+    "current_mtime": "2026-06-19T15:09:40"
+  },
+  {
+    "path": "vite.config.js",
+    "current_bytes": 161,
+    "current_mtime": "2026-06-19T15:09:40"
+  }
+]

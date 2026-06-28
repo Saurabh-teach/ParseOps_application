@@ -1,0 +1,143 @@
+=== DATABASE USERS ===
+User ID: f26335fb-bbfa-4850-a954-dac09500cb24, Email: test_login123@gmail.com
+User ID: 92877cdf-b893-4268-9405-6897e61ef624, Email: admin101@gmail.com
+User ID: 44f2a68a-38e4-4c74-a175-9d3a648ce5c4, Email: saurabhangale9332+member1@gmail.com
+User ID: 92327ccd-d560-4b5b-ba37-d9b3853b736b, Email: saurabhangale9332+user1@gmail.com
+User ID: f9104037-8282-4faa-9eef-5f1e0fb5fe98, Email: saurabhangale9332+test11@gmail.com
+User ID: 26a7e9f7-de21-46d8-ac0e-26176ee3fdc1, Email: saurabhangale9332+member4@gmail.com
+User ID: a3a5341d-9636-45c0-bd92-19b26f9bcc76, Email: bhangalesaurabh62+member1@gmail.com
+User ID: e5969f29-b025-4f04-8ed1-c540731cb746, Email: bhangalesaurabh62+member2@gmail.com
+User ID: a1cb1b7d-8a94-4190-9e9b-d434432fafbe, Email: bhangalesaurabh9332+user2@gmail.com
+User ID: bf9d0719-92f0-45ad-8273-8e8e199c2ac7, Email: bhangalesaurabh62+user2@gmail.com
+User ID: 9f89fcb1-a929-4898-8832-1327891ff02a, Email: saurabhangale9332+user1@gamil.com
+User ID: 32e8eecd-7a17-45e5-b304-4e129c41631f, Email: admin1@gmail.com
+User ID: d1fd426b-9c32-4444-8121-d3b4e8ff36e9, Email: bhangalesaurabh9332+member101@gmail.com
+User ID: 62c46a1b-b59a-4349-a80f-6ace149aae3d, Email: saurabhangale9332+test4@gmail.com
+User ID: 931648e7-cec0-4032-9456-e50ee910e0d0, Email: saurabhangale9332+member102@gmail.com
+User ID: b2548609-943f-4f5f-947b-f9e913b803a7, Email: saurabhangale9332+member2@gmail.com
+User ID: 2c070740-7e74-4e2d-b77d-8efca699367c, Email: bhangalesaurabh20+member2@gmail.com
+User ID: e620a8d2-fe49-4237-9726-cfc94a4bc074, Email: bhangalesaurabh20+member1@gmail.com
+User ID: 3009e541-66fe-4f3c-8e0c-019a74517170, Email: admin@gmail.com
+User ID: ed3de3d1-6501-4eb1-a3fa-7e6663f60706, Email: bhangalesaurabh62+test@gmail.com
+User ID: 185bc074-ffed-4364-923a-4620ffc03cd0, Email: bhangalesaurabh62+owner1@gmail.com
+User ID: 741f8091-5d9f-454d-9ce9-7cb2c58490b7, Email: bhangalesaurabh62+test101@gmail.com
+User ID: a74af57b-26c5-41d7-9a9c-8bb4b76b34ed, Email: saurabhangale9332+test10@gmail.com
+User ID: b08f8399-8323-4919-a6b3-e6b5f92fca0e, Email: bhangalesaurabh20+admin1@gmail.com
+User ID: df9f66e7-d11a-4abe-b416-467a86c8c644, Email: saurabhangale9332+member21@gmail.com
+User ID: 6c68a0ea-026f-495b-9cd4-988b41b8e8dc, Email: bhangalesaurabh20+owner@gmail.com
+User ID: a9f3b997-e487-4645-8f92-3ee2439c1b5b, Email: bhangalesaurabh20+member3@gmail.com
+User ID: 019527ad-3676-4a60-b771-579fa3056254, Email: bhangalesaurabh62+member103@gmail.com
+User ID: ebc28b97-6e26-4f94-950b-fc5cc91d72c6, Email: microsoft_user@gmail.com
+User ID: 5cd4c2b4-3742-4ae1-b521-e827ac1ef1c4, Email: super@gmail.com
+User ID: 7d1374d7-d737-4282-9dda-f7089acbc298, Email: microsoft_developer@acme.com
+User ID: eb337637-52ef-4385-b5bb-f7dc4c9bb56c, Email: sso_developer@acme.com
+User ID: 59435ae9-8529-47a3-a94c-c3564a60d498, Email: bhangalesaurabh20+member1011@gmail.com
+User ID: dc710635-fd40-4b9c-843b-027e817393f3, Email: bhangalesaurabh20+member1007@gmail.com
+User ID: e882435d-1405-4cfc-9df6-10876924e7b2, Email: bhangalesaurabh20+member1004@gmail.com
+User ID: 66ac0657-70b7-4e51-98ca-fadbb4ba7498, Email: bhangalesaurabh20+member1005@gmail.com
+User ID: 98a555ea-0a0b-4ac2-80fa-b51886c3e587, Email: bhangalesaurabh20+member1009@gmail.com
+User ID: 473c887a-5b70-4530-9eca-d2f3400dd2ce, Email: bhangalesaurabh20+member4@gmail.com
+User ID: d2cd3e59-03eb-4481-a9c7-b1f13df2b067, Email: bhangalesaurabh20+member1008@gmail.com
+User ID: a29ef993-e603-4dd8-913a-d12a61f23eb5, Email: bhangalesaurabh20+member1000@gmail.com
+User ID: e6d75ffe-630e-4790-939c-3c47a64eba54, Email: bhangalesaurabh20+member1003@gmail.com
+User ID: 949f6447-9181-4f73-adf7-3dbc687302f7, Email: bhangalesaurabh20+member1010@gmail.com
+User ID: ea674206-7370-4dcc-8cc4-125b98490e93, Email: bhangalesaurabh20+member1012@gmail.com
+User ID: c054d431-e927-4129-972e-78751e589135, Email: bhangalesaurabh20+member1006@gmail.com
+User ID: a658f7e3-151a-4443-a7e2-b65027dde6a1, Email: bhangalesaurabh20+member1002@gmail.com
+User ID: 807b8818-29ca-4a00-9fd8-91cc704631ad, Email: bhangalesaurabh20+member1001@gmail.com
+User ID: a88e1ee9-4e2f-443a-a7bc-f98866888930, Email: john.doe@example.com
+User ID: 9ddb253f-c1f7-487e-9df5-db51b5f25627, Email: bhangalesaurabh20+member1015@gmail.com
+User ID: 612046cf-9849-4974-8048-789f0ca8f39a, Email: bhangalesaurabh201+owner@gmail.com
+User ID: 925f9bba-4d37-4e31-a39e-b177e7c702fc, Email: bhangalesaurabh20+owner11@gmail.com
+User ID: 879ad2d1-e9c8-4673-b41f-f1c64beb1ac6, Email: bhangalesaurabh20+owner12@gmail.com
+User ID: 9048c515-30d2-4789-93b9-3b17d9011a16, Email: saurabhangale20+mem1@gmail.com
+
+=== DATABASE TASKS ===
+Task: task4, Assignee: 9ddb253f-c1f7-487e-9df5-db51b5f25627, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Homepage Redesign, Assignee: 98a555ea-0a0b-4ac2-80fa-b51886c3e587, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Leave Management, Assignee: d2cd3e59-03eb-4481-a9c7-b1f13df2b067, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Employee Onboarding, Assignee: dc710635-fd40-4b9c-843b-027e817393f3, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Stock Alert System, Assignee: c054d431-e927-4129-972e-78751e589135, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Product CRUD Operations, Assignee: 66ac0657-70b7-4e51-98ca-fadbb4ba7498, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Conversation History, Assignee: e882435d-1405-4cfc-9df6-10876924e7b2, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Integrate Grok API, Assignee: e6d75ffe-630e-4790-939c-3c47a64eba54, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Account Dashboard, Assignee: a658f7e3-151a-4443-a7e2-b65027dde6a1, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: User Registration Flow, Assignee: 807b8818-29ca-4a00-9fd8-91cc704631ad, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: test1, Assignee: 807b8818-29ca-4a00-9fd8-91cc704631ad, Status: done, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: aaa, Assignee: 807b8818-29ca-4a00-9fd8-91cc704631ad, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Brand Guideline Document, Assignee: 59435ae9-8529-47a3-a94c-c3564a60d498, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Security Testing, Assignee: 59435ae9-8529-47a3-a94c-c3564a60d498, Status: done, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: User Feedback System, Assignee: ea674206-7370-4dcc-8cc4-125b98490e93, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Influencer Outreach Plan, Assignee: e6d75ffe-630e-4790-939c-3c47a64eba54, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Promotional Video Script, Assignee: c054d431-e927-4129-972e-78751e589135, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Production Deployment, Assignee: e882435d-1405-4cfc-9df6-10876924e7b2, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: SEO Audit, Assignee: 98a555ea-0a0b-4ac2-80fa-b51886c3e587, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Notification Service, Assignee: dc710635-fd40-4b9c-843b-027e817393f3, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Transaction API, Assignee: 949f6447-9181-4f73-adf7-3dbc687302f7, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Modern Sidebar Design, Assignee: d2cd3e59-03eb-4481-a9c7-b1f13df2b067, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Chat Interface Design, Assignee: 66ac0657-70b7-4e51-98ca-fadbb4ba7498, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Google Analytics Setup, Assignee: e882435d-1405-4cfc-9df6-10876924e7b2, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Campaign Performance Report, Assignee: c054d431-e927-4129-972e-78751e589135, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Payment Gateway Testing, Assignee: 59435ae9-8529-47a3-a94c-c3564a60d498, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Unit Testing, Assignee: a29ef993-e603-4dd8-913a-d12a61f23eb5, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: User Profile Page, Assignee: e6d75ffe-630e-4790-939c-3c47a64eba54, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: User Dashboard Design, Assignee: c054d431-e927-4129-972e-78751e589135, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Login Screen Design, Assignee: 66ac0657-70b7-4e51-98ca-fadbb4ba7498, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Feature Requirement Gathering, Assignee: 98a555ea-0a0b-4ac2-80fa-b51886c3e587, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Basic Prompt Templates, Assignee: 949f6447-9181-4f73-adf7-3dbc687302f7, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Content Calendar Creation, Assignee: dc710635-fd40-4b9c-843b-027e817393f3, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Order Management API, Assignee: a658f7e3-151a-4443-a7e2-b65027dde6a1, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Login API, Assignee: d2cd3e59-03eb-4481-a9c7-b1f13df2b067, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: User Registration API, Assignee: a658f7e3-151a-4443-a7e2-b65027dde6a1, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Product Detail Page Design, Assignee: ea674206-7370-4dcc-8cc4-125b98490e93, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Checkout UI Design, Assignee: 807b8818-29ca-4a00-9fd8-91cc704631ad, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Homepage Design, Assignee: 59435ae9-8529-47a3-a94c-c3564a60d498, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Project Roadmap Creation, Assignee: a29ef993-e603-4dd8-913a-d12a61f23eb5, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Competitor Feature Analysis, Assignee: 949f6447-9181-4f73-adf7-3dbc687302f7, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: User Stories, Assignee: dc710635-fd40-4b9c-843b-027e817393f3, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Market Research, Assignee: 59435ae9-8529-47a3-a94c-c3564a60d498, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: User Login with JWT, Assignee: dc710635-fd40-4b9c-843b-027e817393f3, Status: done, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: User Registration with Email + OTP, Assignee: 807b8818-29ca-4a00-9fd8-91cc704631ad, Status: done, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: task-100, Assignee: 473c887a-5b70-4530-9eca-d2f3400dd2ce, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Social Media Creatives, Assignee: None, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Content Generation API, Assignee: 473c887a-5b70-4530-9eca-d2f3400dd2ce, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Prompt Engineering, Assignee: None, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Fund Transfer Feature, Assignee: b08f8399-8323-4919-a6b3-e6b5f92fca0e, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: User Authentication Module, Assignee: None, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Security Research, Assignee: 3009e541-66fe-4f3c-8e0c-019a74517170, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Product API Development, Assignee: a9f3b997-e487-4645-8f92-3ee2439c1b5b, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Homepage Design, Assignee: None, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Create User Stories, Assignee: None, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Market Research, Assignee: None, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: API Verification Task 1, Assignee: 7d1374d7-d737-4282-9dda-f7089acbc298, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: API Verification Task 1, Assignee: 7d1374d7-d737-4282-9dda-f7089acbc298, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: API Verification Task 1, Assignee: eb337637-52ef-4385-b5bb-f7dc4c9bb56c, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: New Auto-Scheduling Test, Assignee: 6c68a0ea-026f-495b-9cd4-988b41b8e8dc, Status: done, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Frontend Auto-Scheduling Test, Assignee: a9f3b997-e487-4645-8f92-3ee2439c1b5b, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: reagain Task for Global Teach, Assignee: 3009e541-66fe-4f3c-8e0c-019a74517170, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Auto-Assign Task for Global Teach, Assignee: a9f3b997-e487-4645-8f92-3ee2439c1b5b, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Create Login Screen, Assignee: 3009e541-66fe-4f3c-8e0c-019a74517170, Status: done, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Setup Firebase, Assignee: 2c070740-7e74-4e2d-b77d-8efca699367c, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Design Homepage, Assignee: e620a8d2-fe49-4237-9726-cfc94a4bc074, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Create User Stories, Assignee: 6c68a0ea-026f-495b-9cd4-988b41b8e8dc, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Market Research, Assignee: 6c68a0ea-026f-495b-9cd4-988b41b8e8dc, Status: testing, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Task-3, Assignee: 2c070740-7e74-4e2d-b77d-8efca699367c, Status: backlog, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: task_B, Assignee: 2c070740-7e74-4e2d-b77d-8efca699367c, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: tasks-A, Assignee: 2c070740-7e74-4e2d-b77d-8efca699367c, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: create model for profile.., Assignee: b08f8399-8323-4919-a6b3-e6b5f92fca0e, Status: in_progress, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Test task, Assignee: b08f8399-8323-4919-a6b3-e6b5f92fca0e, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: Test task, Assignee: None, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: True
+Task: Test task, Assignee: None, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: True
+Task: Test task, Assignee: None, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: True
+Task: registration, Assignee: 6c68a0ea-026f-495b-9cd4-988b41b8e8dc, Status: in_review, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: make model for registrations, Assignee: 019527ad-3676-4a60-b771-579fa3056254, Status: done, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: test login page, Assignee: 019527ad-3676-4a60-b771-579fa3056254, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: check registrations flow, Assignee: 019527ad-3676-4a60-b771-579fa3056254, Status: done, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: check registrations flow, Assignee: 019527ad-3676-4a60-b771-579fa3056254, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: True
+Task: pqr, Assignee: 26a7e9f7-de21-46d8-ac0e-26176ee3fdc1, Status: done, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: pqr, Assignee: 26a7e9f7-de21-46d8-ac0e-26176ee3fdc1, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: make all statements in proper and within time frame, Assignee: 62c46a1b-b59a-4349-a80f-6ace149aae3d, Status: done, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: requirments_uu, Assignee: 92327ccd-d560-4b5b-ba37-d9b3853b736b, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: yyyssppp, Assignee: 92327ccd-d560-4b5b-ba37-d9b3853b736b, Status: todo, S_Status: QUEUED, Start: None, End: None, Deleted: False
+Task: KT complete, Assignee: 62c46a1b-b59a-4349-a80f-6ace149aae3d, Status: done, S_Status: QUEUED, Start: None, End: None, Deleted: False
+======================

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+
+<html lang="en-us" dir="ltr">
+<head>
+<title>Site administration | Django site admin</title>
+<link rel="stylesheet" href="/static/admin/css/base.css">
+
+  <link rel="stylesheet" href="/static/admin/css/dark_mode.css">
+  <script src="/static/admin/js/theme.js"></script>
+
+
+  <link rel="stylesheet" href="/static/admin/css/nav_sidebar.css">
+  <script src="/static/admin/js/nav_sidebar.js" defer></script>
+
+<link rel="stylesheet" href="/static/admin/css/dashboard.css">
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/admin/css/responsive.css">
+    
+
+<meta name="robots" content="NONE,NOARCHIVE">
+</head>
+
+<body class=" dashboard"
+  data-admin-utc-offset="0">
+<a href="#content-start" class="skip-to-content-link">Skip to main content</a>
+<!-- Container -->
+<div id="container">
+
+    
+    <!-- Header -->
+    
+      <header id="header">
+        <div id="branding">
+        
+<div id="site-name"><a href="/admin/">Django administration</a></div>
+
+
+        </div>
+        
+        
+        <div id="user-tools">
+            
+                Welcome,
+                <strong>admin@gmail.com</strong>.
+            
+            
+                
+                    <a href="/">View site</a> /
+                
+                
+                    
+                    
+                
+                
+                <a href="/admin/password_change/">Change password</a> /
+                
+                <form id="logout-form" method="post" action="/admin/logout/">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="p0bGB0TmWlh94WJJEa91Z20nkPjNuarhRJKsvStQjpBWsxXLeranJppyPFG4Aupf">
+                    <button type="submit">Log out</button>
+                </form>
+                
+<button class="theme-toggle">
+  <span class="visually-hidden theme-label-when-auto">Toggle theme (current theme: auto)</span>
+  <span class="visually-hidden theme-label-when-light">Toggle theme (current theme: light)</span>
+  <span class="visually-hidden theme-label-when-dark">Toggle theme (current theme: dark)</span>
+  <svg aria-hidden="true" class="theme-icon-when-auto">
+    <use xlink:href="#icon-auto" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-dark">
+    <use xlink:href="#icon-moon" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-light">
+    <use xlink:href="#icon-sun" />
+  </svg>
+</button>
+
+            
+        </div>
+        
+        
+        
+      </header>
+    
+    <!-- END Header -->
+    
+    
+
+    <div class="main" id="main">
+      
+        
+      
+      <main id="content-start" class="content" tabindex="-1">
+        
+          
+        
+        <!-- Content -->
+        <div id="content" class="colMS">
+          
+          <h1>Site administration</h1>
+          
+          
+<div id="content-main">
+  
+
+
+  
+    <div class="app-auth module">
+      <table>
+        <caption>
+          <a href="/admin/auth/" class="section" title="Models in the Authentication and Authorization application">Authentication and Authorization</a>
+        </caption>
+        
+          
+            <tr class="model-group">
+              <th scope="row" id="auth-group">
+                
+                  <a href="/admin/auth/group/">Groups</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/auth/group/add/" class="addlink" aria-describedby="auth-group">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/auth/group/" class="changelink" aria-describedby="auth-group">Change</a></td>
+                
+              
+            </tr>
+          
+        
+      </table>
+    </div>
+  
+    <div class="app-dashboard module">
+      <table>
+        <caption>
+          <a href="/admin/dashboard/" class="section" title="Models in the Dashboard application">Dashboard</a>
+        </caption>
+        
+          
+            <tr class="model-dashboardapp">
+              <th scope="row" id="dashboard-dashboardapp">
+                
+                  <a href="/admin/dashboard/dashboardapp/">Dashboard apps</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/dashboard/dashboardapp/add/" class="addlink" aria-describedby="dashboard-dashboardapp">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/dashboard/dashboardapp/" class="changelink" aria-describedby="dashboard-dashboardapp">Change</a></td>
+                
+              
+            </tr>
+          
+        
+          
+            <tr class="model-workspaceapp">
+              <th scope="row" id="dashboard-workspaceapp">
+                
+                  <a href="/admin/dashboard/workspaceapp/">Workspace apps</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/dashboard/workspaceapp/add/" class="addlink" aria-describedby="dashboard-workspaceapp">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/dashboard/workspaceapp/" class="changelink" aria-describedby="dashboard-workspaceapp">Change</a></td>
+                
+              
+            </tr>
+          
+        
+      </table>
+    </div>
+  
+    <div class="app-goals module">
+      <table>
+        <caption>
+          <a href="/admin/goals/" class="section" title="Models in the Goals application">Goals</a>
+        </caption>
+        
+          
+            <tr class="model-goals">
+              <th scope="row" id="goals-goals">
+                
+                  <a href="/admin/goals/goals/">Goalss</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/goals/goals/add/" class="addlink" aria-describedby="goals-goals">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/goals/goals/" class="changelink" aria-describedby="goals-goals">Change</a></td>
+                
+              
+            </tr>
+          
+        
+          
+            <tr class="model-keyresult">
+              <th scope="row" id="goals-keyresult">
+                
+                  <a href="/admin/goals/keyresult/">Key results</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/goals/keyresult/add/" class="addlink" aria-describedby="goals-keyresult">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/goals/keyresult/" class="changelink" aria-describedby="goals-keyresult">Change</a></td>
+                
+              
+            </tr>
+          
+        
+      </table>
+    </div>
+  
+    <div class="app-notifications module">
+      <table>
+        <caption>
+          <a href="/admin/notifications/" class="section" title="Models in the Notifications application">Notifications</a>
+        </caption>
+        
+          
+            <tr class="model-notification">
+              <th scope="row" id="notifications-notification">
+                
+                  <a href="/admin/notifications/notification/">Notifications</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/notifications/notification/add/" class="addlink" aria-describedby="notifications-notification">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/notifications/notification/" class="changelink" aria-describedby="notifications-notification">Change</a></td>
+                
+              
+            </tr>
+          
+        
+      </table>
+    </div>
+  
+    <div class="app-organizations module">
+      <table>
+        <caption>
+          <a href="/admin/organizations/" class="section" title="Models in the Organizations application">Organizations</a>
+        </caption>
+        
+          
+            <tr class="model-organizationinvitation">
+              <th scope="row" id="organizations-organizationinvitation">
+                
+                  <a href="/admin/organizations/organizationinvitation/">Organization invitations</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/organizations/organizationinvitation/add/" class="addlink" aria-describedby="organizations-organizationinvitation">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/organizations/organizationinvitation/" class="changelink" aria-describedby="organizations-organizationinvitation">Change</a></td>
+                
+              
+            </tr>
+          
+        
+          
+            <tr class="model-organizationjoinrequest">
+              <th scope="row" id="organizations-organizationjoinrequest">
+                
+                  <a href="/admin/organizations/organizationjoinrequest/">Organization join requests</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/organizations/organizationjoinrequest/add/" class="addlink" aria-describedby="organizations-organizationjoinrequest">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/organizations/organizationjoinrequest/" class="changelink" aria-describedby="organizations-organizationjoinrequest">Change</a></td>
+                
+              
+            </tr>
+          
+        
+          
+            <tr class="model-organizationmembership">
+              <th scope="row" id="organizations-organizationmembership">
+                
+                  <a href="/admin/organizations/organizationmembership/">Organization memberships</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/organizations/organizationmembership/add/" class="addlink" aria-describedby="organizations-organizationmembership">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/organizations/organizationmembership/" class="changelink" aria-describedby="organizations-organizationmembership">Change</a></td>
+                
+              
+            </tr>
+          
+        
+          
+            <tr class="model-organization">
+              <th scope="row" id="organizations-organization">
+                
+                  <a href="/admin/organizations/organization/">Organizations</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/organizations/organization/add/" class="addlink" aria-describedby="organizations-organization">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/organizations/organization/" class="changelink" aria-describedby="organizations-organization">Change</a></td>
+                
+              
+            </tr>
+          
+        
+      </table>
+    </div>
+  
+    <div class="app-tasks module">
+      <table>
+        <caption>
+          <a href="/admin/tasks/" class="section" title="Models in the Tasks application">Tasks</a>
+        </caption>
+        
+          
+            <tr class="model-taskattachment">
+              <th scope="row" id="tasks-taskattachment">
+                
+                  <a href="/admin/tasks/taskattachment/">Task attachments</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/tasks/taskattachment/add/" class="addlink" aria-describedby="tasks-taskattachment">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/tasks/taskattachment/" class="changelink" aria-describedby="tasks-taskattachment">Change</a></td>
+                
+              
+            </tr>
+          
+        
+          
+            <tr class="model-taskcomment">
+              <th scope="row" id="tasks-taskcomment">
+                
+                  <a href="/admin/tasks/taskcomment/">Task comments</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/tasks/taskcomment/add/" class="addlink" aria-describedby="tasks-taskcomment">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/tasks/taskcomment/" class="changelink" aria-describedby="tasks-taskcomment">Change</a></td>
+                
+              
+            </tr>
+          
+        
+          
+            <tr class="model-task">
+              <th scope="row" id="tasks-task">
+                
+                  <a href="/admin/tasks/task/">Tasks</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/tasks/task/add/" class="addlink" aria-describedby="tasks-task">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/tasks/task/" class="changelink" aria-describedby="tasks-task">Change</a></td>
+                
+              
+            </tr>
+          
+        
+      </table>
+    </div>
+  
+    <div class="app-token_blacklist module">
+      <table>
+        <caption>
+          <a href="/admin/token_blacklist/" class="section" title="Models in the Token Blacklist application">Token Blacklist</a>
+        </caption>
+        
+          
+            <tr class="model-blacklistedtoken">
+              <th scope="row" id="token_blacklist-blacklistedtoken">
+                
+                  <a href="/admin/token_blacklist/blacklistedtoken/">Blacklisted Tokens</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/token_blacklist/blacklistedtoken/add/" class="addlink" aria-describedby="token_blacklist-blacklistedtoken">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/token_blacklist/blacklistedtoken/" class="changelink" aria-describedby="token_blacklist-blacklistedtoken">Change</a></td>
+                
+              
+            </tr>
+          
+        
+          
+            <tr class="model-outstandingtoken">
+              <th scope="row" id="token_blacklist-outstandingtoken">
+                
+                  <a href="/admin/token_blacklist/outstandingtoken/">Outstanding Tokens</a>
+                
+              </th>
+
+              
+                <td></td>
+              
+
+              
+                
+                  <td><a href="/admin/token_blacklist/outstandingtoken/" class="changelink" aria-describedby="token_blacklist-outstandingtoken">Change</a></td>
+                
+              
+            </tr>
+          
+        
+      </table>
+    </div>
+  
+    <div class="app-users module">
+      <table>
+        <caption>
+          <a href="/admin/users/" class="section" title="Models in the Users application">Users</a>
+        </caption>
+        
+          
+            <tr class="model-otpverification">
+              <th scope="row" id="users-otpverification">
+                
+                  <a href="/admin/users/otpverification/">Otp verifications</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/users/otpverification/add/" class="addlink" aria-describedby="users-otpverification">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/users/otpverification/" class="changelink" aria-describedby="users-otpverification">Change</a></td>
+                
+              
+            </tr>
+          
+        
+          
+            <tr class="model-passwordresettoken">
+              <th scope="row" id="users-passwordresettoken">
+                
+                  <a href="/admin/users/passwordresettoken/">Password reset tokens</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/users/passwordresettoken/add/" class="addlink" aria-describedby="users-passwordresettoken">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/users/passwordresettoken/" class="changelink" aria-describedby="users-passwordresettoken">Change</a></td>
+                
+              
+            </tr>
+          
+        
+          
+            <tr class="model-user">
+              <th scope="row" id="users-user">
+                
+                  <a href="/admin/users/user/">Users</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/users/user/add/" class="addlink" aria-describedby="users-user">Add</a></td>
+              
+
+              
+                
+                  <td><a href="/admin/users/user/" class="changelink" aria-describedby="users-user">Change</a></td>
+                
+              
+            </tr>
+          
+        
+      </table>
+    </div>
+  
+
+
+</div>
+
+          
+<div id="content-related">
+    <div class="module" id="recent-actions-module">
+        <h2>Recent actions</h2>
+        <h3>My actions</h3>
+            
+            
+            
+            <p>None available</p>
+            
+    </div>
+</div>
+
+          <br class="clear">
+        </div>
+        <!-- END Content -->
+      </main>
+    </div>
+    <footer id="footer"></footer>
+</div>
+<!-- END Container -->
+
+<!-- SVGs -->
+<svg xmlns="http://www.w3.org/2000/svg" class="base-svgs">
+  <symbol viewBox="0 0 24 24" width="1rem" height="1rem" id="icon-auto"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2V4a8 8 0 1 0 0 16z"/></symbol>
+  <symbol viewBox="0 0 24 24" width="1rem" height="1rem" id="icon-moon"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/></symbol>
+  <symbol viewBox="0 0 24 24" width="1rem" height="1rem" id="icon-sun"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/></symbol>
+</svg>
+<!-- END SVGs -->
+</body>
+</html>

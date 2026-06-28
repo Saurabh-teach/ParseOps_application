@@ -1,0 +1,94 @@
+Chat Edit: 'webpack compiled with 3 errors and 1 warning
+Compiling...
+Failed to compile.
+
+Module not found: Error: Can't resolve './pages/tasks/Tasks' in 'C:\Users\saura\Desktop\goalflow\frontend\src'
+ERROR in ./src/App.jsx 18:0-40
+Module not found: Error: Can't resolve './pages/tasks/Tasks' in 'C:\Users\saura\Desktop\goalflow\frontend\src'
+
+ERROR in ./src/App.jsx 20:0-38
+Module not found: Error: Can't resolve './pages/Members' in 'C:\Users\saura\Desktop\goalflow\frontend\src'
+
+webpack compiled with 2 errors
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\App.jsx
+  Line 41:42:  'Tasks' is not defined    react/jsx-no-undef
+  Line 44:44:  'Members' is not defined  react/jsx-no-undef
+
+Search for the keywords to learn more about each error.
+ERROR in [eslint] 
+src\App.jsx
+  Line 41:42:  'Tasks' is not defined    react/jsx-no-undef
+  Line 44:44:  'Members' is not defined  react/jsx-no-undef
+
+Search for the keywords to learn more about each error.
+
+webpack compiled with 1 error
+Compiling...
+Failed to compile.
+
+Module not found: Error: Can't resolve './pages/tasks/Tasks' in 'C:\Users\saura\Desktop\goalflow\frontend\src'
+ERROR in ./src/App.jsx 18:0-40
+Module not found: Error: Can't resolve './pages/tasks/Tasks' in 'C:\Users\saura\Desktop\goalflow\frontend\src'
+
+ERROR in [eslint] 
+src\App.jsx
+  Line 44:44:  'Members' is not defined  react/jsx-no-undef
+
+Search for the keywords to learn more about each error.
+
+webpack compiled with 2 errors
+Compiling...
+Failed to compile.
+
+Module not found: Error: Can't resolve './src/pages/tasks/Tasks' in 'C:\Users\saura\Desktop\goalflow\frontend\src'
+ERROR in ./src/App.jsx 18:0-44
+Module not found: Error: Can't resolve './src/pages/tasks/Tasks' in 'C:\Users\saura\Desktop\goalflow\frontend\src'
+
+ERROR in [eslint] 
+src\App.jsx
+  Line 44:44:  'Members' is not defined  react/jsx-no-undef
+
+Search for the keywords to learn more about each error.
+
+webpack compiled with 2 errors
+Compiling...
+Failed to compile.
+
+Module not found: Error: Can't resolve './src/pages/goals/Goals' in 'C:\Users\saura\Desktop\goalflow\frontend\src'
+ERROR in ./src/App.jsx 16:0-44
+Module not found: Error: Can't resolve './src/pages/goals/Goals' in 'C:\Users\saura\Desktop\goalflow\frontend\src'
+
+ERROR in ./src/App.jsx 17:0-54
+Module not found: Error: Can't resolve './src/pages/goals/CreateGoal' in 'C:\Users\saura\Desktop\goalflow\frontend\src'
+
+ERROR in ./src/App.jsx 18:0-44
+Module not found: Error: Can't resolve './src/pages/tasks/Tasks' in 'C:\Users\saura\Desktop\goalflow\frontend\src'
+
+ERROR in ./src/App.jsx 19:0-53
+Module not found: Error: Can't resolve '.src/pages/tasks/CreateTask' in 'C:\Users\saura\Desktop\goalflow\frontend\src'
+
+ERROR in [eslint] 
+src\App.jsx
+  Line 44:44:  'Members' is not defined  react/jsx-no-undef
+
+Search for the keywords to learn more about each error.
+
+webpack compiled with 5 errors
+Compiling...
+Failed to compile.
+
+Module not found: Error: Can't resolve './pages/tasks/Tasks' in 'C:\Users\saura\Desktop\goalflow\frontend\src'
+ERROR in ./src/App.jsx 18:0-40
+Module not found: Error: Can't resolve './pages/tasks/Tasks' in 'C:\Users\saura\Desktop\goalflow\frontend\src'
+
+ERROR in [eslint] 
+src\App.jsx
+  Line 44:44:  'Members' is not defined  react/jsx-no-undef
+
+Search for the keywords to learn more about each error.
+
+webpack compiled with 2 errors'

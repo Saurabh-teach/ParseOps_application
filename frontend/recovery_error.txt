@@ -1,0 +1,2 @@
+Error: Command failed: git show HEAD:frontend/src/App.jsx
+fatal: invalid object name 'HEAD'.
