@@ -208,91 +208,9 @@ class SchedulerService:
             for start, end in get_working_intervals(day, org, user=user)
         )
 
-    @classmethod
-    def _build_free_segments(
-        cls,
-        candidate_start,
-        duration_minutes,
-        allowed_workdays,
-        org,
-        user,
-        occupied_intervals,
-    ):
-        """
-        Build a task window from a free candidate start.
-
-        Breaks are pausable working-calendar gaps, so a task may resume after
-        lunch/tea. Existing tasks are hard blockers: if the required duration
-        would cross one, this candidate is rejected and the caller tries the
-        next real free gap.
-        """
-        allowed = set(allowed_workdays)
-        day_order = {day: idx for idx, day in enumerate(allowed_workdays)}
-        current_day = cls._logical_workday(candidate_start, org, user)
-        remaining = max(1, int(duration_minutes))
-        cursor = candidate_start
-        segments = []
-
-        # Short tasks should not consume a tiny end-of-day remainder and spill
-        # into tomorrow; long tasks that cannot fit in any single day may span.
-        day_capacity = cls._day_capacity_minutes(current_day, org, user=user)
-        must_finish_same_day = remaining <= day_capacity
-        start_day = current_day
-
-        while current_day in allowed and remaining > 0:
-            if must_finish_same_day and current_day != start_day:
-                return None
-
-            intervals = get_working_intervals(current_day, org, user=user)
-            for interval_start, interval_end in intervals:
-                if interval_end <= cursor:
-                    continue
-
-                active_start = max(interval_start, cursor)
-                if active_start >= interval_end:
-                    continue
-
-                blocker_start = None
-                for busy_start, busy_end in occupied_intervals:
-                    if busy_end <= active_start:
-                        continue
-                    if busy_start >= interval_end:
-                        break
-                    if busy_start <= active_start < busy_end:
-                        return None
-                    blocker_start = busy_start
-                    break
-
-                usable_end = min(interval_end, blocker_start) if blocker_start else interval_end
-                if usable_end <= active_start:
-                    return None
-
-                available = int(round((usable_end - active_start).total_seconds() / 60.0))
-                allocated = min(available, remaining)
-                active_end = active_start + timedelta(minutes=allocated)
-                segments.append({
-                    "start": active_start,
-                    "end": active_end,
-                    "duration": allocated,
-                })
-                remaining -= allocated
-                cursor = active_end
-
-                if remaining <= 0:
-                    return segments
-                if blocker_start and cursor >= blocker_start:
-                    return None
-
-            next_index = day_order.get(current_day, -1) + 1
-            if next_index >= len(allowed_workdays):
-                break
-            current_day = allowed_workdays[next_index]
-            next_intervals = get_working_intervals(current_day, org, user=user)
-            if not next_intervals:
-                continue
-            cursor = next_intervals[0][0]
-
-        return None
+        # Deprecated: _build_free_segments is no longer used.
+        # find_earliest_slot now handles greedy continuous allocation directly.
+        pass
 
     @classmethod
     def _get_busy_slots(cls, assignee_id, range_start_utc, range_end_utc, exclude_task_ids=None):
@@ -447,6 +365,9 @@ class SchedulerService:
         start_time_perf = datetime.now()
 
         # Step 2: Try to find a slot within the allowed working days
+        segments = []
+        remaining = required_minutes
+        
         for day_idx, day in enumerate(allowed_workdays):
             if (datetime.now() - start_time_perf).total_seconds() > 3.0:
                 logger.warning("[Scheduler] Scanning timed out during slot search.")
@@ -458,30 +379,39 @@ class SchedulerService:
             working_intervals = get_working_intervals(day, org, user=user)
             free_intervals = cls._subtract_intervals(working_intervals, org_occupied)
 
-            # Find a candidate start time on this day. Breaks may be crossed by
-            # pausing/resuming, but occupied task intervals may not be crossed.
+            # Greedily allocate free time
             for start, end in free_intervals:
+                # If we've already satisfied the duration, we're done
+                if remaining <= 0:
+                    break
+                    
                 if end <= start_search_from:
                     continue
                 candidate_start = max(start, start_search_from)
                 if candidate_start >= end:
                     continue
 
-                segments = cls._build_free_segments(
-                    candidate_start=candidate_start,
-                    duration_minutes=required_minutes,
-                    allowed_workdays=allowed_workdays[day_idx:],
-                    org=org,
-                    user=user,
-                    occupied_intervals=org_occupied,
-                )
+                available_mins = int(round((end - candidate_start).total_seconds() / 60.0))
+                allocated = min(available_mins, remaining)
+                
+                if allocated > 0:
+                    active_end = candidate_start + timedelta(minutes=allocated)
+                    segments.append({
+                        "start": candidate_start,
+                        "end": active_end,
+                        "duration": allocated,
+                    })
+                    remaining -= allocated
+                    
+                    # Update start_search_from so we don't double-book if this loop continues
+                    start_search_from = active_end
 
-                if segments:
-                    logger.info(
-                        f"[Scheduler] Continuous slot found. "
-                        f"Scanned {day_idx + 1} working days."
-                    )
-                    return segments
+            if remaining <= 0:
+                logger.info(
+                    f"[Scheduler] Continuous slot found. "
+                    f"Scanned {day_idx + 1} working days."
+                )
+                return segments
 
         logger.info(
             f"[Scheduler] Insufficient capacity within {len(allowed_workdays)} working days for assignee {assignee_id}. "
@@ -650,15 +580,6 @@ class SchedulerService:
     @classmethod
     @transaction.atomic
     def schedule_single_task_in_earliest_gap(cls, task, start_search_from=None):
-        """
-        Schedule one newly-created or queued task without moving existing tasks.
-
-        This is the create/preview counterpart to the full timeline reflow:
-        - It reads the assignee's personal working schedule.
-        - It respects existing scheduled tasks, breaks, holidays, and leaves.
-        - It fills real gaps first.
-        - It queues the task when the 7-working-day window has no capacity.
-        """
         if not task.assignee_id or not task.organization_id:
             task.planned_start = None
             task.planned_end = None
@@ -750,7 +671,10 @@ class SchedulerService:
             invalidate_assignee_occupied_cache(assignee_id)
             now_dt = from_datetime or timezone.now()
 
-            # 1. Fetch all future scheduled tasks and queued tasks
+            # 1. Fetch tasks for this scheduling mode.
+            # Default queue processing must not repack existing scheduled work:
+            # it should only place queued/new work into real free gaps. Explicit
+            # reflow paths use include_manual=True and may rebuild the timeline.
             task_query = (
                 Task.objects.select_for_update()
                 .filter(
@@ -763,11 +687,16 @@ class SchedulerService:
             if not include_manual:
                 task_query = task_query.filter(is_auto_scheduled=True)
 
-            scheduled_window = Q(schedule_status='SCHEDULED', planned_start__gte=now_dt)
             if include_manual:
-                scheduled_window |= Q(schedule_status='SCHEDULED', planned_end__gt=now_dt)
-
-            tasks = list(task_query.filter(Q(schedule_status='QUEUED') | scheduled_window))
+                scheduled_window = (
+                    Q(schedule_status='SCHEDULED', planned_start__gte=now_dt) |
+                    Q(schedule_status='SCHEDULED', planned_end__gt=now_dt)
+                )
+                tasks = list(task_query.filter(Q(schedule_status='QUEUED') | scheduled_window))
+            else:
+                # Preserve gaps created by shortening: existing later tasks stay
+                # fixed, while queued tasks look for available slots between them.
+                tasks = list(task_query.filter(schedule_status='QUEUED'))
 
             # Store original status to detect changes
             for task in tasks:
@@ -923,6 +852,25 @@ class SchedulerService:
                         'updated_at', 'queue_position', 'schedule_reason',
                         'last_scheduler_run'
                     ])
+
+            # New or unscheduled tasks should be placed into the earliest real
+            # gap without repacking later work. This preserves any gap created
+            # by a prior shortening edit and lets newly-created tasks use it.
+            if not changed_task.planned_start and not old_planned_start and not old_planned_end:
+                cls.schedule_single_task_in_earliest_gap(changed_task)
+                return
+
+            # Shortening the estimate should only update this task's end time.
+            # Keep later tasks fixed so the freed time remains an actual gap
+            # that new tasks can be scheduled into.
+            if (
+                old_planned_start and
+                old_planned_end and
+                changed_task.planned_start == old_planned_start and
+                changed_task.planned_end and
+                changed_task.planned_end < old_planned_end
+            ):
+                return
 
             # Fetch every task that was originally after the changed task.
             # planned_end > original_boundary also catches tasks that were

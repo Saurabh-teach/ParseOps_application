@@ -672,4 +672,18 @@ def handle_leave_approved(sender, instance, created, **kwargs):
         from tasks.services.scheduler import reschedule_assignee_tasks
         reschedule_assignee_tasks(instance.user_id, instance.organization_id)
 
-
+@receiver(post_save, sender=Task)
+def sync_parent_task_status_on_subtask_save(sender, instance, created, **kwargs):
+    if instance.parent_id:
+        parent = instance.parent
+        subtasks = parent.subtasks.all()
+        if not subtasks.exists(): return
+        statuses = set(subtasks.values_list('status', flat=True))
+        new_status = 'todo'
+        if len(statuses) == 1: new_status = statuses.pop()
+        elif 'testing' in statuses: new_status = 'testing'
+        elif 'in_review' in statuses: new_status = 'in_review'
+        elif 'in_progress' in statuses: new_status = 'in_progress'
+        if parent.status != new_status:
+            parent.status = new_status
+            parent.save(update_fields=['status'])

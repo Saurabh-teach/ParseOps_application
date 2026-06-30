@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 import uuid
 from django.utils import timezone
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -20,10 +22,10 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     """Main User Table - Email based authentication"""
-    username = None # Remove username field
+    username = None 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     
-    email = models.EmailField(unique=True) # Email is now unique and required
+    email = models.EmailField(unique=True) 
     is_online = models.BooleanField(default=False)
     last_seen = models.DateTimeField(null=True, blank=True)
     phone = models.CharField(max_length=15, null=True, blank=True)
@@ -39,18 +41,13 @@ class User(AbstractUser):
     setup_step = models.IntegerField(default=1)
     must_change_password = models.BooleanField(default=False)
 
-    # Scoring-related fields
     past_performance = models.PositiveIntegerField(default=80, help_text="Past performance score (0-100)")
     experience_score = models.PositiveIntegerField(default=80, help_text="Experience score (0-100)")
     efficiency_score = models.PositiveIntegerField(default=80, help_text="Default efficiency score (0-100)")
     availability_score = models.PositiveIntegerField(default=100, help_text="Default availability score (0-100)")
     current_workload_score = models.PositiveIntegerField(default=0, help_text="Default workload score (0-100)")
 
-    # Dynamic Scoring Helper Methods
     def get_assigned_hours(self):
-        """
-        Dynamically calculate total estimated hours of all active (non-done) tasks assigned to this user.
-        """
         active_tasks = self.assigned_tasks.exclude(status='done')
         total_hours = 0.0
         for task in active_tasks:
@@ -61,10 +58,6 @@ class User(AbstractUser):
         return total_hours
 
     def get_efficiency(self):
-        """
-        Dynamically calculate efficiency as (completed / total_assigned) * 100.
-        Falls back to efficiency_score field if no tasks are assigned yet.
-        """
         total = self.assigned_tasks.count()
         if total > 0:
             completed = self.assigned_tasks.filter(status='done').count()
@@ -72,10 +65,6 @@ class User(AbstractUser):
         return float(self.efficiency_score)
 
     def get_availability(self):
-        """
-        Dynamically calculate availability. If the user has an approved leave request today,
-        availability is 0. Otherwise, returns availability_score.
-        """
         today = timezone.localdate()
         on_leave = self.leave_requests.filter(
             status='Approved',
@@ -90,14 +79,12 @@ class User(AbstractUser):
         """
         Calculate and return the final Employee Score.
         """
-        # Fallback to experience_score field when the calculations module is commented out.
         return float(self.experience_score)
 
     def calculate_fatigue(self):
         """
         Calculate and return the Fatigue Score.
         """
-        # Fallback to 0.0 fatigue when the calculations module is commented out.
         return 0.0
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -214,8 +201,10 @@ class UserWorkingSchedule(models.Model):
     work_end_time = models.TimeField(default='19:00:00')
     lunch_break_start = models.TimeField(default='13:00:00')
     lunch_break_end = models.TimeField(default='14:00:00')
+    no_lunch_break = models.BooleanField(default=False)
     tea_break_start = models.TimeField(default='17:00:00')
     tea_break_end = models.TimeField(default='17:30:00')
+    no_tea_break = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         from datetime import datetime, timedelta, time
@@ -231,11 +220,8 @@ class UserWorkingSchedule(models.Model):
             w_start = parse_time(self.work_start_time)
             self.work_start_time = w_start
             
-            # Use the user-supplied work_end_time instead of forcing start + 10h.
-            # This allows half-day, full-day, or overtime schedules per requirements.
             w_end = parse_time(self.work_end_time) if self.work_end_time else None
             if not w_end:
-                # Fallback: default to 9-hour workday if no end time set
                 w_end_dt = datetime.combine(dummy_date, w_start) + timedelta(hours=9)
                 w_end = w_end_dt.time()
             self.work_end_time = w_end
@@ -247,7 +233,6 @@ class UserWorkingSchedule(models.Model):
             
             w_start_dt = datetime.combine(dummy_date, self.work_start_time)
             w_end_dt = datetime.combine(dummy_date, self.work_end_time)
-            # Handle overnight shifts (e.g. 22:00 - 06:00)
             if w_end_dt <= w_start_dt:
                 w_end_dt += timedelta(days=1)
             
@@ -262,14 +247,12 @@ class UserWorkingSchedule(models.Model):
             t_start_dt = normalize_dt(self.tea_break_start)
             t_end_dt = normalize_dt(self.tea_break_end)
             
-            # Enforce max break durations: lunch max 60 min, tea max 30 min
             if (l_end_dt - l_start_dt).total_seconds() > 3600:
                 l_end_dt = l_start_dt + timedelta(minutes=60)
             
             if (t_end_dt - t_start_dt).total_seconds() > 1800:
                 t_end_dt = t_start_dt + timedelta(minutes=30)
                 
-            # Clamp breaks to be within working hours
             l_start_dt = max(w_start_dt, min(l_start_dt, w_end_dt))
             l_end_dt = max(w_start_dt, min(l_end_dt, w_end_dt))
             self.lunch_break_start = l_start_dt.time()
@@ -284,9 +267,6 @@ class UserWorkingSchedule(models.Model):
 
     class Meta:
         db_table = 'user_working_schedule'
-
-from django.db.models.signals import post_save, post_delete
-from django.dispatch import receiver
 
 @receiver(post_save, sender=User)
 def create_user_working_schedule(sender, instance, created, **kwargs):
@@ -320,4 +300,3 @@ def schedule_dynamic_reschedule_on_leave_delete(sender, instance, **kwargs):
             from tasks.services.scheduler import SchedulerService
             SchedulerService.reschedule_user_future_tasks(instance.user_id)
         transaction.on_commit(do_reschedule)
-

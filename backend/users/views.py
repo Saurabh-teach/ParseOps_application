@@ -44,11 +44,6 @@ def _build_schedule_change_message(user, old_schedule, new_schedule):
 
 
 def _notify_schedule_change_watchers(user, organization, old_schedule, new_schedule):
-    """
-    Notify owners/admins and creators of this member's active tasks. This keeps
-    schedule-change visibility tied to the same people whose task timelines can
-    move after the per-user reschedule.
-    """
     from organizations.models import OrganizationMembership
     from tasks.models import Task
     from notifications.services import NotificationService
@@ -105,9 +100,7 @@ class RegisterView(APIView):
         serializer = RegisterRequestSerializer(data=request.data)
         if serializer.is_valid():
             email = serializer.validated_data['email']
-            # Store data in Redis temporarily (10 mins)
             OTPManager.store_temp_data(email, serializer.validated_data)
-            # Generate and send OTP
             otp = OTPManager.generate_otp()
             OTPManager.store_otp(email, otp, purpose='registration')
             OTPManager.send_otp_email(email, otp, purpose_text="registration")
@@ -131,12 +124,10 @@ class VerifyRegistrationOTPView(APIView):
             
             is_valid, error_msg = OTPManager.verify_otp(email, otp, purpose='registration')
             if is_valid:
-                # Retrieve temp data from Redis
                 data = OTPManager.get_temp_data(email)
                 if not data:
                     return Response({"error": "Registration session expired. Please register again."}, status=status.HTTP_400_BAD_REQUEST)
                 
-                # Create User in database
                 user = User.objects.create_user(
                     email=data['email'],
                     password=data['password']
@@ -149,7 +140,6 @@ class VerifyRegistrationOTPView(APIView):
                     import logging
                     logging.getLogger(__name__).error(f"Error processing pending invitations: {e}")
                 
-                # Cleanup Redis (Security best practice)
                 OTPManager.delete_otp(email, purpose='registration')
                 cache.delete(f"temp_reg:{email}")
                 
@@ -193,6 +183,8 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
             'lunch_break_end': schedule.lunch_break_end,
             'tea_break_start': schedule.tea_break_start,
             'tea_break_end': schedule.tea_break_end,
+            'no_lunch_break': schedule.no_lunch_break,
+            'no_tea_break': schedule.no_tea_break,
         }
         
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
@@ -220,7 +212,6 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
             from organizations.models import OrganizationMembership
             from django.utils import timezone
             
-            # Get all orgs this user belongs to and reschedule their tasks in each
             memberships = OrganizationMembership.objects.filter(
                 user=updated_user,
                 is_active=True
@@ -265,7 +256,6 @@ class RequestEmailChangeView(APIView):
             
             new_email = serializer.validated_data['new_email']
             
-            # Generate and Send OTP to the NEW email
             otp = OTPManager.generate_otp()
             OTPManager.store_otp(new_email, otp, purpose='email_change')
             OTPManager.send_otp_email(new_email, otp, purpose_text="email change")
@@ -292,7 +282,6 @@ class VerifyEmailChangeView(APIView):
                 user.email = new_email
                 user.save()
                 
-                # Cleanup Redis OTP
                 OTPManager.delete_otp(new_email, purpose='email_change')
                 
                 return Response({"message": "Email updated successfully!"}, status=status.HTTP_200_OK)
@@ -376,7 +365,6 @@ class LoginView(APIView):
             if not user or not user.check_password(password):
                 return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
-            # Generate and send OTP
             otp = OTPManager.generate_otp()
             OTPManager.store_otp(email, otp, purpose='login')
             OTPManager.send_otp_email(email, otp, purpose_text="login")
@@ -386,7 +374,6 @@ class LoginView(APIView):
                 "email": OTPManager.mask_email(email)
             }, status=status.HTTP_200_OK)
             
-        # Format validation errors into a clean string
         error_msg = "Authentication failed."
         if 'email' in serializer.errors:
             error_msg = serializer.errors['email'][0]
@@ -412,10 +399,8 @@ class VerifyLoginOTPView(APIView):
                 if not user:
                     return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
                 
-                # Generate JWT tokens
                 refresh = RefreshToken.for_user(user)
                 
-                # Cleanup Redis
                 OTPManager.delete_otp(email, purpose='login')
                 
                 return Response({
@@ -437,16 +422,13 @@ class ResendRegistrationOTPView(APIView):
         if serializer.is_valid():
             email = serializer.validated_data['email']
             
-            # Check if temp data exists
             if not OTPManager.get_temp_data(email):
                 return Response({"error": "No pending registration found for this email."}, status=status.HTTP_400_BAD_REQUEST)
             
-            # Check cooldown
             allowed, seconds = OTPManager.can_resend(email, purpose='registration')
             if not allowed:
                 return Response({"error": f"Please wait {seconds} seconds before requesting a new OTP."}, status=status.HTTP_429_TOO_MANY_REQUESTS)
             
-            # Generate and resend
             otp = OTPManager.generate_otp()
             OTPManager.store_otp(email, otp, purpose='registration')
             OTPManager.send_otp_email(email, otp, purpose_text="registration")
@@ -464,16 +446,13 @@ class ResendLoginOTPView(APIView):
         if serializer.is_valid():
             email = serializer.validated_data['email']
             
-            # Check if user exists
             if not User.objects.filter(email__iexact=email).exists():
                 return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
             
-            # Check cooldown
             allowed, seconds = OTPManager.can_resend(email, purpose='login')
             if not allowed:
                 return Response({"error": f"Please wait {seconds} seconds before requesting a new OTP."}, status=status.HTTP_429_TOO_MANY_REQUESTS)
             
-            # Generate and resend
             otp = OTPManager.generate_otp()
             OTPManager.store_otp(email, otp, purpose='login')
             OTPManager.send_otp_email(email, otp, purpose_text="login")
@@ -491,16 +470,13 @@ class ForgotPasswordView(APIView):
         if serializer.is_valid():
             email = serializer.validated_data['email']
             
-            # Check if user exists
             if not User.objects.filter(email__iexact=email).exists():
                 return Response({"error": "No account found with this email."}, status=status.HTTP_404_NOT_FOUND)
 
-            # Check cooldown
             can_send, timeLeft = OTPManager.can_resend(email, purpose='password_reset')
             if not can_send:
                 return Response({"error": f"Please wait {timeLeft} seconds before requesting a new OTP."}, status=status.HTTP_429_TOO_MANY_REQUESTS)
 
-            # Generate and Send OTP
             otp = OTPManager.generate_otp()
             OTPManager.store_otp(email, otp, purpose='password_reset')
             OTPManager.send_otp_email(email, otp, purpose_text="password reset")
@@ -523,12 +499,10 @@ class ResetPasswordVerifyView(APIView):
             if not new_password:
                 return Response({"error": "New password is required."}, status=status.HTTP_400_BAD_REQUEST)
 
-            # Verify OTP
             is_valid, error_msg = OTPManager.verify_otp(email, otp, purpose='password_reset')
             if not is_valid:
                 return Response({"error": error_msg}, status=status.HTTP_400_BAD_REQUEST)
 
-            # Update Password
             try:
                 user = User.objects.get(email__iexact=email)
                 user.set_password(new_password)
@@ -549,7 +523,6 @@ class ResetPasswordVerifyView(APIView):
                         import logging
                         logging.getLogger(__name__).error(f"Error triggering acceptance notification from reset password: {e}")
                 
-                # Cleanup
                 OTPManager.delete_otp(email, purpose='password_reset')
                 
                 return Response({"message": "Password updated successfully! You can now login."}, status=status.HTTP_200_OK)
@@ -574,7 +547,6 @@ class MicrosoftLoginView(APIView):
         client_secret = getattr(settings, "MICROSOFT_CLIENT_SECRET", "")
         frontend_url = getattr(settings, "FRONTEND_URL", "http://localhost:5173")
         
-        # Check if proper Microsoft OAuth credentials are configured
         is_configured = (
             client_id and 
             "mock" not in client_id.lower() and 
@@ -975,7 +947,6 @@ class LeaveRequestViewSet(viewsets.ModelViewSet):
         leave_request = serializer.save(user=self.request.user)
         org = leave_request.organization
         
-        # Deduct balance temporarily or permanently depending on workflow
         if org and leave_request.leave_type not in ['Unpaid', 'Maternity_Paternity', 'WFH']:
             from .models import LeaveBalance
             balance, _ = LeaveBalance.objects.get_or_create(
@@ -988,7 +959,6 @@ class LeaveRequestViewSet(viewsets.ModelViewSet):
             balance.save()
 
         if org:
-            # Notify admins and owners
             from tasks.services import NotificationService
             managers = OrganizationMembership.objects.filter(
                 organization=org,
@@ -1015,7 +985,6 @@ class LeaveRequestViewSet(viewsets.ModelViewSet):
             
         org = get_object_or_404(Organization, id=org_id)
         
-        # Check permissions: must be owner/admin
         membership = OrganizationMembership.objects.filter(organization=org, user=request.user, is_active=True).first()
         if not membership or membership.role not in ['owner', 'admin']:
             return Response({"error": "Only Admins or Owners can view all leave requests."}, status=403)
@@ -1034,7 +1003,6 @@ class LeaveRequestViewSet(viewsets.ModelViewSet):
         leave_request = self.get_object()
         org = leave_request.organization
         
-        # Check permissions: must be owner/admin
         membership = OrganizationMembership.objects.filter(organization=org, user=request.user, is_active=True).first()
         if not membership or membership.role not in ['owner', 'admin']:
             return Response({"error": "Only Admins or Owners can approve leave requests."}, status=403)
@@ -1043,7 +1011,6 @@ class LeaveRequestViewSet(viewsets.ModelViewSet):
         leave_request.approved_by = request.user
         leave_request.save()
         
-        # Real-time notification to employee
         from tasks.services import NotificationService
         NotificationService.send_notification(
             recipient=leave_request.user,
@@ -1060,7 +1027,6 @@ class LeaveRequestViewSet(viewsets.ModelViewSet):
         leave_request = self.get_object()
         org = leave_request.organization
         
-        # Check permissions: must be owner/admin
         membership = OrganizationMembership.objects.filter(organization=org, user=request.user, is_active=True).first()
         if not membership or membership.role not in ['owner', 'admin']:
             return Response({"error": "Only Admins or Owners can reject leave requests."}, status=403)
@@ -1071,7 +1037,6 @@ class LeaveRequestViewSet(viewsets.ModelViewSet):
         leave_request.rejection_reason = rejection_reason
         leave_request.save()
         
-        # Refund balance
         if org and leave_request.leave_type not in ['Unpaid', 'Maternity_Paternity', 'WFH']:
             from .models import LeaveBalance
             try:
@@ -1081,7 +1046,6 @@ class LeaveRequestViewSet(viewsets.ModelViewSet):
             except LeaveBalance.DoesNotExist:
                 pass
 
-        # Real-time notification to employee
         from tasks.services import NotificationService
         NotificationService.send_notification(
             recipient=leave_request.user,
@@ -1106,7 +1070,6 @@ class LeaveRequestViewSet(viewsets.ModelViewSet):
         leave_request.cancellation_reason = cancellation_reason
         leave_request.save()
         
-        # Refund balance
         if org and leave_request.leave_type not in ['Unpaid', 'Maternity_Paternity', 'WFH']:
             from .models import LeaveBalance
             try:
@@ -1116,7 +1079,6 @@ class LeaveRequestViewSet(viewsets.ModelViewSet):
             except LeaveBalance.DoesNotExist:
                 pass
                 
-        # Notify admins and owners
         if org:
             from tasks.services import NotificationService
             managers = OrganizationMembership.objects.filter(

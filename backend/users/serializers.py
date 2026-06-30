@@ -17,12 +17,15 @@ class UserWorkingScheduleSerializer(serializers.ModelSerializer):
             "work_start_time", "work_end_time", 
             "lunch_break_start", "lunch_break_end",
             "tea_break_start", "tea_break_end",
+            "no_lunch_break", "no_tea_break",
             "lunch_duration_minutes", "tea_duration_minutes"
         ]
         read_only_fields = []
 
     @extend_schema_field(serializers.IntegerField())
     def get_lunch_duration_minutes(self, obj):
+        if getattr(obj, 'no_lunch_break', False):
+            return 0
         if obj.lunch_break_start and obj.lunch_break_end:
             from datetime import datetime
             dummy = datetime.today()
@@ -34,6 +37,8 @@ class UserWorkingScheduleSerializer(serializers.ModelSerializer):
 
     @extend_schema_field(serializers.IntegerField())
     def get_tea_duration_minutes(self, obj):
+        if getattr(obj, 'no_tea_break', False):
+            return 0
         if obj.tea_break_start and obj.tea_break_end:
             from datetime import datetime
             dummy = datetime.today()
@@ -60,7 +65,6 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = ["id", "setup_step", "email", "employee_score", "fatigue_score"]
 
     def to_internal_value(self, data):
-        # Support multipart/form-data where working_schedule fields are flattened
         if hasattr(data, 'copy'):
             mutable_data = data.copy()
         else:
@@ -70,6 +74,7 @@ class UserSerializer(serializers.ModelSerializer):
             'work_start_time', 'work_end_time', 
             'lunch_break_start', 'lunch_break_end',
             'tea_break_start', 'tea_break_end',
+            'no_lunch_break', 'no_tea_break',
             'lunch_duration_minutes', 'tea_duration_minutes'
         ]
         
@@ -78,15 +83,12 @@ class UserSerializer(serializers.ModelSerializer):
             if key in mutable_data:
                 schedule_data[key] = mutable_data.get(key)
                 
-        # Do not inject dictionary into QueryDict to avoid stringification issues
-        # Remove flat keys from mutable_data so DRF doesn't complain
         for key in schedule_keys:
             if key in mutable_data:
                 del mutable_data[key]
                 
         validated_data = super().to_internal_value(mutable_data)
         
-        # Attach the raw schedule_data explicitly for the update() method
         if schedule_data:
             validated_data['working_schedule'] = schedule_data
             
@@ -145,15 +147,11 @@ class UserSerializer(serializers.ModelSerializer):
                 ldur = get_dur(ls, le)
                 if ldur > 60:
                     raise serializers.ValidationError({"lunch_break_end": "Lunch break cannot exceed 60 minutes."})
-                if ldur < 1:
-                    raise serializers.ValidationError({"lunch_break_end": "Lunch break must be at least 1 minute."})
             
             if ts and te:
                 tdur = get_dur(ts, te)
                 if tdur > 30:
                     raise serializers.ValidationError({"tea_break_end": "Tea break cannot exceed 30 minutes."})
-                if tdur < 1:
-                    raise serializers.ValidationError({"tea_break_end": "Tea break must be at least 1 minute."})
 
             if ls and le and ts and te and w_start and w_end:
                 def normalize(t, ref_start):
@@ -173,25 +171,29 @@ class UserSerializer(serializers.ModelSerializer):
                 if w2 <= w1:
                     w2 += timedelta(days=1)
 
-                if l1 < w1 or l2 > w2:
-                    raise serializers.ValidationError({"lunch_break_start": "Lunch break must be within working hours."})
-                if t1 < w1 or t2 > w2:
-                    raise serializers.ValidationError({"tea_break_start": "Tea break must be within working hours."})
+                no_lunch = str(schedule_data.get('no_lunch_break', '')).lower() == 'true'
+                no_tea = str(schedule_data.get('no_tea_break', '')).lower() == 'true'
 
-                if l1 < t2 and t1 < l2:
-                    raise serializers.ValidationError({"tea_break_start": "Tea break cannot overlap with lunch break."})
+                if not no_lunch and get_dur(ls, le) > 0:
+                    if l1 < w1 or l2 > w2:
+                        raise serializers.ValidationError({"lunch_break_start": "Lunch break must be within working hours."})
+                if not no_tea and get_dur(ts, te) > 0:
+                    if t1 < w1 or t2 > w2:
+                        raise serializers.ValidationError({"tea_break_start": "Tea break must be within working hours."})
+
+                if not no_lunch and not no_tea and get_dur(ls, le) > 0 and get_dur(ts, te) > 0:
+                    if l1 < t2 and t1 < l2:
+                        raise serializers.ValidationError({"tea_break_start": "Tea break cannot overlap with lunch break."})
 
         return super().validate(attrs)
 
     def update(self, instance, validated_data):
         schedule_data = validated_data.pop('working_schedule', None)
         
-        # Update user fields
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
         
-        # Update nested working_schedule
         if schedule_data is not None:
             schedule, created = UserWorkingSchedule.objects.get_or_create(user=instance)
             
@@ -218,7 +220,9 @@ class UserSerializer(serializers.ModelSerializer):
 
             for attr, value in schedule_data.items():
                 if attr in ['lunch_duration_minutes', 'tea_duration_minutes']:
-                        continue
+                    continue
+                if attr in ['no_lunch_break', 'no_tea_break']:
+                    value = str(value).lower() == 'true'
                 setattr(schedule, attr, value)
             schedule._skip_dynamic_reschedule = True
             schedule.save()
@@ -330,11 +334,9 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
         start_date = data.get('start_date')
         end_date = data.get('end_date')
 
-        # Validate start_date <= end_date
         if start_date and end_date and start_date > end_date:
             raise serializers.ValidationError("Start date must be before or equal to end date.")
 
-        # Overlapping leave check for the user
         request = self.context.get('request')
         user = request.user if request else None
         if user:
@@ -349,21 +351,17 @@ class LeaveRequestSerializer(serializers.ModelSerializer):
             if overlapping.exists():
                 raise serializers.ValidationError("You already have a pending or approved leave request during this period.")
             
-            # Calculate number_of_days
             from datetime import timedelta
             if start_date and end_date:
-                # Basic days calculation (excluding weekends could be added here)
                 days = (end_date - start_date).days + 1
                 leave_type = data.get('leave_type')
                 if leave_type == 'Half_Day':
                     days = 0.5
                 data['number_of_days'] = float(days)
 
-                # Balance check
                 org = data.get('organization') or (self.instance.organization if self.instance else None)
                 if org and leave_type not in ['Unpaid', 'Maternity_Paternity', 'WFH']:
                     from .models import LeaveBalance
-                    # Auto-create a default 10 day balance if none exists
                     balance, created = LeaveBalance.objects.get_or_create(
                         user=user,
                         organization=org,

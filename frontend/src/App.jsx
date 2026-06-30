@@ -716,8 +716,10 @@ const getMemberSchedule = (member) => (
     work_end_time: '19:00:00',
     lunch_break_start: '13:00:00',
     lunch_break_end: '14:00:00',
+    no_lunch_break: false,
     tea_break_start: '17:00:00',
     tea_break_end: '17:30:00',
+    no_tea_break: false,
   }
 );
 const getTaskSpentMinutes = (task) => {
@@ -1957,8 +1959,10 @@ const handleLoadProfile = async () => {
       work_end_time: data.working_schedule?.work_end_time || data.work_end_time || '19:00:00',
       lunch_break_start: data.working_schedule?.lunch_break_start || data.lunch_break_start || '13:00:00',
       lunch_break_end: data.working_schedule?.lunch_break_end || data.lunch_break_end || '14:00:00',
+      no_lunch_break: data.working_schedule?.no_lunch_break || false,
       tea_break_start: data.working_schedule?.tea_break_start || data.tea_break_start || '17:00:00',
       tea_break_end: data.working_schedule?.tea_break_end || data.tea_break_end || '17:30:00',
+      no_tea_break: data.working_schedule?.no_tea_break || false,
       profile_picture: null,
       profile_picture_preview: data.profile_picture ? (data.profile_picture.startsWith('http') ? data.profile_picture : `http://localhost:8000${data.profile_picture}`) : null
     });
@@ -1988,8 +1992,10 @@ const handleUpdateProfile = async (e) => {
     fd.append('work_end_time', profileData.work_end_time);
     fd.append('lunch_break_start', profileData.lunch_break_start);
     fd.append('lunch_break_end', profileData.lunch_break_end);
+    fd.append('no_lunch_break', profileData.no_lunch_break);
     fd.append('tea_break_start', profileData.tea_break_start);
     fd.append('tea_break_end', profileData.tea_break_end);
+    fd.append('no_tea_break', profileData.no_tea_break);
     if (profileData.profile_picture instanceof File) {
       fd.append('profile_picture', profileData.profile_picture);
     }
@@ -2648,12 +2654,7 @@ const handleSendInvite = async (e) => {
   e.preventDefault();
   setLoading(true);
   try {
-    // Normalize role for backend ('limited_member' and 'guest' map to 'member')
-    let backendRole = inviteData.role;
-    if (backendRole === 'limited_member' || backendRole === 'guest') {
-      backendRole = 'member';
-    }
-    await inviteMember(selectedOrg.id, inviteData.email, backendRole, inviteData.message);
+    await inviteMember(selectedOrg.id, inviteData.email, inviteData.role, inviteData.message);
     setMessage(`Invitation sent to ${inviteData.email}`);
     setShowInviteModal(false);
     setShowRoleDropdown(false);
@@ -5334,7 +5335,15 @@ if (view === 'dashboard') {
                         >
                           <option value="backlog">Backlog</option>
                           <option value="todo">To Do</option>
-                          <option value="in_progress">In Progress</option>
+                          <option 
+                            value="in_progress"
+                            disabled={
+                              selectedOrg?.my_status?.role === 'member' && 
+                              tasks.some(t => String(t.id) !== String(activeTask.id) && t.status === 'in_progress' && (String(t.assignee) === String(currentUserId) || (t.assignee_details && t.assignee_details.some(d => String(d.id) === String(currentUserId)))))
+                            }
+                          >
+                            In Progress
+                          </option>
                           <option value="in_review">In Review</option>
                           <option value="testing">Testing</option>
                           <option value="done">Done</option>
@@ -6789,6 +6798,26 @@ if (view === 'dashboard') {
                             <h5 style={{ margin: '0 0 0.5rem 0', fontSize: '0.85rem', color: '#1e293b', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                               <Calendar size={14} /> Schedule Preview
                             </h5>
+                            {(() => {
+                              if (schedulePreview.isLoading || !schedulePreview.segments || schedulePreview.segments.length === 0) return null;
+                              const segments = schedulePreview.segments;
+                              const dailyMins = {};
+                              segments.forEach(seg => {
+                                const d = new Date(seg.start);
+                                const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                                dailyMins[dateStr] = (dailyMins[dateStr] || 0) + seg.duration;
+                              });
+                              const dates = Object.keys(dailyMins);
+                              if (dates.length > 1) {
+                                const breakdown = dates.map(d => `${(dailyMins[d] / 60).toFixed(1)} hrs on ${d}`).join(' + ');
+                                return (
+                                  <div style={{ marginBottom: '0.75rem', padding: '0.75rem', background: '#e0e7ff', border: '1px solid #a5b4fc', borderRadius: '6px', color: '#3730a3', fontSize: '0.8rem' }}>
+                                    <strong>Info:</strong> This task spans multiple days and will be split into {dates.length} parts: {breakdown}.
+                                  </div>
+                                );
+                              }
+                              return null;
+                            })()}
                             <div style={{ fontSize: '0.75rem', color: '#475569', marginBottom: '0.75rem', paddingBottom: '0.5rem', borderBottom: '1px dashed #cbd5e1' }}>
                               Assignee Working Hours: <strong>{activeTaskAssigneeSchedule ? `${(activeTaskAssigneeSchedule.work_start_time || '10:00:00').substring(0,5)} to ${(activeTaskAssigneeSchedule.work_end_time || '19:00:00').substring(0,5)}` : 'Default (10:00 to 19:00)'}</strong>
                             </div>
@@ -6842,19 +6871,6 @@ if (view === 'dashboard') {
                             )}
                           </div>
                         )}
-
-                        {/* Member Past Stats */}
-                        {(() => {
-                          const selectedId = newTaskData.assignees && newTaskData.assignees[0];
-                          if (!selectedId) return null;
-                          const stats = getMemberStats(selectedId);
-                          if (!stats) return null;
-                          return (
-                            <div style={{ fontSize: '0.78rem', color: '#475569', background: '#f8fafc', padding: '0.4rem 0.6rem', borderRadius: '6px', border: '1px solid #cbd5e1', marginTop: '0.75rem' }}>
-                              📈 <strong>Past Performance:</strong> {stats.performance}% | ⚡ <strong>Efficiency:</strong> {stats.efficiency}x | 💼 Completed {stats.completed} similar tasks
-                            </div>
-                          );
-                        })()}
                       </div>
                     ) : (
                       /* Commented: Smart Suggestion Feature */
@@ -8685,7 +8701,17 @@ return null;
 
               </div>
               
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem', marginTop: '0.5rem' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: '#475569', cursor: 'pointer' }}>
+                  <input
+                    type="checkbox"
+                    checked={profileData.no_lunch_break}
+                    onChange={(e) => setProfileData({ ...profileData, no_lunch_break: e.target.checked })}
+                  />
+                  No Lunch Break
+                </label>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', opacity: profileData.no_lunch_break ? 0.5 : 1, pointerEvents: profileData.no_lunch_break ? 'none' : 'auto' }}>
                 <div className="input-group" style={{ margin: 0 }}>
                   <label className="input-label" style={{ fontWeight: 600, color: '#334155', fontSize: '0.85rem' }}>Lunch Break Start</label>
                   <input
@@ -8719,7 +8745,17 @@ return null;
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem', marginTop: '0.5rem' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: '#475569', cursor: 'pointer' }}>
+                  <input
+                    type="checkbox"
+                    checked={profileData.no_tea_break}
+                    onChange={(e) => setProfileData({ ...profileData, no_tea_break: e.target.checked })}
+                  />
+                  No Tea Break
+                </label>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', opacity: profileData.no_tea_break ? 0.5 : 1, pointerEvents: profileData.no_tea_break ? 'none' : 'auto' }}>
                 <div className="input-group" style={{ margin: 0 }}>
                   <label className="input-label" style={{ fontWeight: 600, color: '#334155', fontSize: '0.85rem' }}>Tea Break Start</label>
                   <input
@@ -9495,13 +9531,11 @@ return null;
                 <div style={{ textAlign: 'left' }}>
                   <div className="invite-role-title" style={{ fontSize: '0.85rem', fontWeight: 600, color: '#0f172a' }}>
                     {inviteData.role === 'admin' ? 'Admin' :
-                      inviteData.role === 'limited_member' ? 'Limited Member' :
-                        inviteData.role === 'guest' ? 'Guest' : 'Member'}
+                      inviteData.role === 'owner' ? 'Owner' : 'Member'}
                   </div>
                   <div className="invite-role-desc" style={{ fontSize: '0.75rem', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '240px', marginTop: '1px' }}>
+                    {inviteData.role === 'owner' && 'Full access to all Workspace settings and billing.'}
                     {inviteData.role === 'admin' && 'Can manage Spaces, People, Billing and other Workspace settings.'}
-                    {inviteData.role === 'limited_member' && 'Can only access items shared with them.'}
-                    {inviteData.role === 'guest' && "Can't use all features or be added to Spaces. Can only access items shared with them."}
                     {inviteData.role === 'member' && 'Can access all public items in your Workspace.'}
                   </div>
                 </div>
@@ -9523,33 +9557,6 @@ return null;
                   </div>
                   {inviteData.role === 'member' && <span className="invite-option-checkmark" style={{ color: '#6366f1', fontSize: '0.85rem', fontWeight: 'bold' }}>✓</span>}
                 </div>
-                {/* Limited Member option */}
-                <div
-                  className={`invite-role-option ${inviteData.role === 'limited_member' ? 'selected' : ''}`}
-                  onClick={() => { setInviteData({ ...inviteData, role: 'limited_member' }); setShowRoleDropdown(false); }}
-                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.6rem 1rem', cursor: 'pointer', borderLeft: inviteData.role === 'limited_member' ? '3px solid #6366f1' : '3px solid transparent', background: inviteData.role === 'limited_member' ? '#f8fafc' : 'transparent' }}
-                >
-                  <div className="invite-option-content" style={{ textAlign: 'left' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <span className="invite-option-title" style={{ fontSize: '0.825rem', fontWeight: 600, color: '#1e293b' }}>Limited Member</span>
-                      <span className="invite-option-badge" style={{ fontSize: '0.65rem', background: '#faf5ff', color: '#8b5cf6', border: '1px solid #ebd5ff', padding: '0.05rem 0.35rem', borderRadius: '4px', fontWeight: 500 }}>Chat Collaborator</span>
-                    </div>
-                    <div className="invite-option-desc" style={{ fontSize: '0.725rem', color: '#64748b', marginTop: '2px' }}>Can only access items shared with them.</div>
-                  </div>
-                  {inviteData.role === 'limited_member' && <span className="invite-option-checkmark" style={{ color: '#6366f1', fontSize: '0.85rem', fontWeight: 'bold' }}>✓</span>}
-                </div>
-                {/* Guest option */}
-                <div
-                  className={`invite-role-option ${inviteData.role === 'guest' ? 'selected' : ''}`}
-                  onClick={() => { setInviteData({ ...inviteData, role: 'guest' }); setShowRoleDropdown(false); }}
-                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.6rem 1rem', cursor: 'pointer', borderLeft: inviteData.role === 'guest' ? '3px solid #6366f1' : '3px solid transparent', background: inviteData.role === 'guest' ? '#f8fafc' : 'transparent' }}
-                >
-                  <div className="invite-option-content" style={{ textAlign: 'left' }}>
-                    <span className="invite-option-title" style={{ fontSize: '0.825rem', fontWeight: 600, color: '#1e293b' }}>Guest</span>
-                    <div className="invite-option-desc" style={{ fontSize: '0.725rem', color: '#64748b', marginTop: '2px' }}>Can't use all features or be added to Spaces. Can only access items shared with them.</div>
-                  </div>
-                  {inviteData.role === 'guest' && <span className="invite-option-checkmark" style={{ color: '#6366f1', fontSize: '0.85rem', fontWeight: 'bold' }}>✓</span>}
-                </div>
                 {/* Admin option */}
                 <div
                   className={`invite-role-option ${inviteData.role === 'admin' ? 'selected' : ''}`}
@@ -9562,11 +9569,20 @@ return null;
                   </div>
                   {inviteData.role === 'admin' && <span className="invite-option-checkmark" style={{ color: '#6366f1', fontSize: '0.85rem', fontWeight: 'bold' }}>✓</span>}
                 </div>
-                <div className="invite-dropdown-divider" style={{ height: '1px', background: '#f1f5f9', margin: '0.4rem 0' }}></div>
-                {/* Add Custom Role */}
-                <div className="invite-role-option-custom" style={{ padding: '0.5rem 1rem', textAlign: 'left', color: '#94a3b8', fontSize: '0.8rem', cursor: 'not-allowed', fontStyle: 'italic' }}>
-                  <span>+ Add custom role</span>
-                </div>
+                {/* Owner option */}
+                {selectedOrg?.my_status?.role === 'owner' && (
+                  <div
+                    className={`invite-role-option ${inviteData.role === 'owner' ? 'selected' : ''}`}
+                    onClick={() => { setInviteData({ ...inviteData, role: 'owner' }); setShowRoleDropdown(false); }}
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.6rem 1rem', cursor: 'pointer', borderLeft: inviteData.role === 'owner' ? '3px solid #6366f1' : '3px solid transparent', background: inviteData.role === 'owner' ? '#f8fafc' : 'transparent' }}
+                  >
+                    <div className="invite-option-content" style={{ textAlign: 'left' }}>
+                      <span className="invite-option-title" style={{ fontSize: '0.825rem', fontWeight: 600, color: '#1e293b' }}>Owner</span>
+                      <div className="invite-option-desc" style={{ fontSize: '0.725rem', color: '#64748b', marginTop: '2px' }}>Full access to all Workspace settings and billing.</div>
+                    </div>
+                    {inviteData.role === 'owner' && <span className="invite-option-checkmark" style={{ color: '#6366f1', fontSize: '0.85rem', fontWeight: 'bold' }}>✓</span>}
+                  </div>
+                )}
               </div>
             )}
           </div>

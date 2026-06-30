@@ -56,6 +56,27 @@ def add_business_days_for_user(start_date, days_to_add, user_id):
         days_to_add -= 1
     return current_date
 
+def get_user_productive_minutes(user_id=None, organization=None):
+    from django.utils import timezone
+    from datetime import timedelta
+    
+    # We need an organization to accurately calculate timezones, default to 390 if missing
+    if not organization:
+        return 390
+        
+    day = timezone.now().date()
+    # Find next working day, simple loop skipping weekends to get a base day
+    while day.weekday() >= 5:
+        day += timedelta(days=1)
+        
+    from tasks.services.calendar import get_working_intervals
+    intervals = get_working_intervals(day, organization, user=user_id)
+    mins = sum(int(round((end - start).total_seconds() / 60.0)) for start, end in intervals)
+    
+    # Fallback to standard if no intervals found
+    return mins if mins > 0 else 390
+
+
 class TaskService:
     @staticmethod
     def calculate_ideal_due_date(organization_id, assignees, estimated_minutes, exclude_task_id=None):
@@ -64,9 +85,13 @@ class TaskService:
             
         start_from = timezone.now()
         
+        from organizations.models import Organization
+        org = Organization.objects.filter(id=organization_id).first()
+        
         # If no assignees, just calculate based on standalone time
         if not assignees:
-            days_needed = math.ceil(estimated_minutes / PRODUCTIVE_MINUTES_PER_DAY)
+            prod_mins = get_user_productive_minutes(None, org)
+            days_needed = math.ceil(estimated_minutes / prod_mins)
             days_to_add = max(0, days_needed - 1)
             return add_business_days(start_from, days_to_add).replace(hour=18, minute=0, second=0, microsecond=0)
             
@@ -85,7 +110,8 @@ class TaskService:
             backlog_minutes = sum([t.estimated_minutes for t in pending_tasks if t.estimated_minutes])
             total_minutes = backlog_minutes + estimated_minutes
             
-            days_needed = math.ceil(total_minutes / PRODUCTIVE_MINUTES_PER_DAY)
+            prod_mins = get_user_productive_minutes(user_id, org)
+            days_needed = math.ceil(total_minutes / prod_mins)
             days_to_add = max(0, days_needed - 1)
             
             user_date = add_business_days_for_user(start_from, days_to_add, user_id)

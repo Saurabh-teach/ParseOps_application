@@ -6,8 +6,26 @@ from django.db.models import Q
 STANDARD_WORKDAY_HOURS = 8.5
 LUNCH_BREAK_HOURS = 1.0
 TEA_BREAK_HOURS = 1.0
-# Effective focused work per day = 8.5 - 1.0 - 1.0 = 6.5 hours
+# Fallback effective focused work per day = 8.5 - 1.0 - 1.0 = 6.5 hours
 EFFECTIVE_WORK_HOURS = STANDARD_WORKDAY_HOURS - LUNCH_BREAK_HOURS - TEA_BREAK_HOURS
+
+def get_user_effective_work_hours(user=None, organization=None):
+    if not user or not organization:
+        return EFFECTIVE_WORK_HOURS
+    from tasks.services.calendar import get_working_intervals
+    from django.utils import timezone
+    from datetime import timedelta
+    
+    # Use a dummy workday to calculate typical capacity
+    dummy_day = timezone.now().date()
+    while dummy_day.weekday() >= 5:
+        dummy_day -= timedelta(days=1)
+        
+    intervals = get_working_intervals(dummy_day, organization, user=user)
+    total_seconds = sum((end - start).total_seconds() for start, end in intervals)
+    if total_seconds > 0:
+        return total_seconds / 3600.0
+    return EFFECTIVE_WORK_HOURS
 
 def count_workdays(start_date, end_date):
     """

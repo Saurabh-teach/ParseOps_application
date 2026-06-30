@@ -260,7 +260,30 @@ class TaskSerializer(serializers.ModelSerializer):
                     "assignees": f"{user_name} is on leave from {overlapping_leaves[0].start_date} to {overlapping_leaves[0].end_date}."
                 })
 
-        # 5. Only one task "in_progress" per assignee validation - REMOVED to allow multiple task assignments
+        # 5. Only one task "in_progress" per assignee validation for Members
+        status_val = attrs.get('status', getattr(self.instance, 'status', None) if self.instance else None)
+        assignee_val = attrs.get('assignee', getattr(self.instance, 'assignee', None) if self.instance else None)
+        
+        if status_val == 'in_progress' and assignee_val:
+            request = self.context.get('request')
+            if request and request.user:
+                org = attrs.get('organization', getattr(self.instance, 'organization', None) if self.instance else None)
+                if org:
+                    from core.permissions import get_member_membership
+                    membership = get_member_membership(request, org.id)
+                    if membership and membership.role.lower() == 'member':
+                        qs = Task.objects.filter(
+                            assignee=assignee_val,
+                            status='in_progress',
+                            is_deleted=False
+                        )
+                        if self.instance:
+                            qs = qs.exclude(id=self.instance.id)
+                        
+                        if qs.exists():
+                            raise serializers.ValidationError({
+                                "status": "You already have an active task. Please complete the current task first before starting a new one."
+                            })
         
         # 6. Check uniqueness of task name within the goal
         title = attrs.get('title', getattr(self.instance, 'title', None) if self.instance else None)

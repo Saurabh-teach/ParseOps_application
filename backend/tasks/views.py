@@ -48,24 +48,13 @@ def build_task_create_response(task, request):
 
 
 def filter_visible_tasks(request, qs, organization):
-    """
-    Applies the visibility logic to task queries:
-    - Owners and Admins of the organization can view ALL tasks (hierarchy override).
-    - Members can view tasks if they are organization-wide, or if they are
-      the creator, assignee, watcher, or explicitly in the visible_to list.
-      - Specific-visibility tasks are ONLY visible to users in visible_to.
-    """
     membership = get_member_membership(request, organization.id)
     if not membership or not membership.is_active:
         return qs.none()
 
-    # Owners and admins see ALL tasks — full hierarchy access
     if membership.role in ['owner', 'admin']:
         return qs
 
-    # Standard members: strict visibility filter
-    # organization-wide tasks OR tasks where they have personal access
-    # specific-visibility tasks are ONLY shown if they're in visible_to
     return qs.filter(
         Q(visibility_type='organization') |
         Q(created_by=request.user) |
@@ -77,9 +66,6 @@ def filter_visible_tasks(request, qs, organization):
 
 
 class CreateTaskView(APIView):
-    """
-    Endpoint for creating tasks within the organization context.
-    """
     permission_classes = [IsAuthenticated, HasTaskPermissions]
 
     @extend_schema(
@@ -92,12 +78,10 @@ class CreateTaskView(APIView):
         org_id = request.data.get('organization')
         organization = get_object_or_404(Organization, id=org_id)
 
-        # Additional Assignee Check
         assignees = request.data.get('assignees', [])
         watchers = request.data.get('watchers', [])
         visible_to = request.data.get('visible_to', [])
 
-        # Clean/normalize arrays (remove empty, null, or undefined placeholders from frontend)
         if isinstance(assignees, list):
             assignees = [u for u in assignees if u and str(u).strip() and str(u).lower() != 'null']
         else:
@@ -113,7 +97,6 @@ class CreateTaskView(APIView):
         else:
             visible_to = []
 
-        # Update request.data to contain the cleaned lists so the serializer doesn't get dirty values
         if hasattr(request.data, '_mutable'):
             old_mutable = request.data._mutable
             request.data._mutable = True
@@ -129,7 +112,6 @@ class CreateTaskView(APIView):
             except TypeError:
                 pass
 
-        # Validate that all assignees, watchers, and visible_to users are part of this organization
         all_related_users = set([u for u in (assignees + watchers + visible_to) if str(u).strip()])
         if all_related_users:
             valid_member_count = OrganizationMembership.objects.filter(
@@ -146,13 +128,34 @@ class CreateTaskView(APIView):
         serializer = TaskSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             assigned_at = timezone.now() if assignees else None
+            
+            from tasks.services.scheduler import get_schedule_preview
+            total_hours = serializer.validated_data.get('estimated_hours')
+            assignee_id = assignees[0] if assignees else None
+            
+            splits = []
+            if total_hours and assignee_id:
+                preview = get_schedule_preview(assignee_id=assignee_id, estimated_hours=total_hours, org_id=organization.id)
+                if preview and preview.get("segments"):
+                    from collections import defaultdict
+                    from tasks.services.calendar import to_org_tz
+                    daily_minutes = defaultdict(int)
+                    for seg in preview["segments"]:
+                        start_local = to_org_tz(seg["start"], organization)
+                        daily_minutes[start_local.date()] += seg["duration"]
+                    for day, mins in sorted(daily_minutes.items()):
+                        splits.append(round(mins / 60.0, 2))
+            
+            is_parent = len(splits) > 1
+            
             task = serializer.save(
                 organization=organization,
                 created_by=request.user,
-                assigned_at=assigned_at
+                assigned_at=assigned_at,
+                is_auto_scheduled=not is_parent,
+                schedule_status='QUEUED' if is_parent else 'QUEUED'
             )
             
-            # Prevent regular user from assigning tasks to admins or owners
             if assignees:
                 member = OrganizationMembership.objects.filter(organization=organization, user=request.user).first()
                 if member and member.role == 'member':
@@ -172,8 +175,6 @@ class CreateTaskView(APIView):
             if visible_to:
                 task.visible_to.set(visible_to)
 
-            # For specific-visibility tasks: always ensure creator is included
-            # AND auto-add all org owners/admins so hierarchy is never broken
             if task.visibility_type == 'specific':
                 task.visible_to.add(request.user)
                 management_user_ids = OrganizationMembership.objects.filter(
@@ -184,14 +185,35 @@ class CreateTaskView(APIView):
                 if management_user_ids:
                     task.visible_to.add(*management_user_ids)
 
-            # If frontend explicitly sends planned_start or planned_end, pin the task
             if request.data.get('planned_start') or request.data.get('planned_end'):
                 task.is_auto_scheduled = False
 
-            # The serializer already saves planned_start to the task instance if provided by the frontend.
-            # apply_automatic_task_schedule will intelligently use task.planned_start as the starting
-            # point to find the earliest non-overlapping free slot.
-            task = apply_automatic_task_schedule(task)
+            if is_parent:
+                for i, split_hrs in enumerate(splits):
+                    part_title = f"{task.title} (Part {i+1})"
+                    part_data = {
+                        **request.data,
+                        'title': part_title,
+                        'estimated_hours': split_hrs,
+                        'estimated_minutes': int(split_hrs * 60)
+                    }
+                    part_serializer = TaskSerializer(data=part_data, context={'request': request})
+                    if part_serializer.is_valid():
+                        part_task = part_serializer.save(
+                            organization=organization,
+                            created_by=request.user,
+                            assigned_at=assigned_at,
+                            parent=task,
+                            is_auto_scheduled=not (request.data.get('planned_start') or request.data.get('planned_end'))
+                        )
+                        if watchers: part_task.watchers.set(watchers)
+                        if visible_to: part_task.visible_to.set(visible_to)
+                        if part_task.visibility_type == 'specific':
+                            part_task.visible_to.add(request.user)
+                            if management_user_ids: part_task.visible_to.add(*management_user_ids)
+                        apply_automatic_task_schedule(part_task)
+            else:
+                task = apply_automatic_task_schedule(task)
 
             return Response(build_task_create_response(task, request), status=status.HTTP_201_CREATED)
 
@@ -303,10 +325,6 @@ class TaskDetailView(APIView):
                 task._skip_dynamic_reschedule = True
             updated_task = serializer.save()
             
-            # Backend-driven recalculation for Task Details edits.
-            # Estimated duration and Scheduled Start are authoritative inputs;
-            # Scheduled End is recalculated from working minutes on the
-            # assignee's personal schedule, including lunch and tea breaks.
             has_start = 'planned_start' in request.data
             has_end = 'planned_end' in request.data
             has_est = 'estimated_hours' in request.data or 'estimated_minutes' in request.data

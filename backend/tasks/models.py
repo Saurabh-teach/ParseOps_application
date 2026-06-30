@@ -36,6 +36,7 @@ class Task(models.Model):
     goal = models.ForeignKey('goals.Goals', on_delete=models.CASCADE, related_name='tasks', null=True, blank=True)
     organization = models.ForeignKey('organizations.Organization', on_delete=models.CASCADE, related_name='tasks')
     title = models.CharField(max_length=500)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='subtasks', help_text="Parent task if this is a split part")
     description = models.TextField(blank=True, null=True)
     # Each task is now assigned to a single user. A user can have many tasks.
     assignee = models.ForeignKey(

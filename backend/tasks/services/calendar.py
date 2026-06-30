@@ -60,9 +60,13 @@ def get_working_intervals(day, organization, user=None):
     tea_end = max(start_dt, min(tea_end, end_dt))
     
     breaks = []
-    if lunch_start < lunch_end:
+    
+    no_lunch = getattr(schedule, 'no_lunch_break', False) if schedule else False
+    no_tea = getattr(schedule, 'no_tea_break', False) if schedule else False
+    
+    if not no_lunch and lunch_start < lunch_end:
         breaks.append((lunch_start, lunch_end))
-    if tea_start < tea_end:
+    if not no_tea and tea_start < tea_end:
         breaks.append((tea_start, tea_end))
     
     for extra_break in organization.additional_breaks:

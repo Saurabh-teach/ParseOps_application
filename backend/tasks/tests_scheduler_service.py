@@ -494,7 +494,7 @@ class SchedulerServiceTests(TestCase):
         third.refresh_from_db()
         self.assert_local_window(first, "10:00", "12:00")
         self.assert_local_window(second, "12:00", "13:00")
-        self.assert_local_window(third, "13:00", "14:00")
+        self.assert_local_window(third, "14:00", "15:00")
 
     @patch("tasks.services.scheduler.timezone.now")
     def test_lengthen_middle_task_moves_later_tasks_backward(self, mock_now):
@@ -518,6 +518,32 @@ class SchedulerServiceTests(TestCase):
         self.assert_local_window(first, "10:00", "11:00")
         self.assert_local_window(second, "11:00", "13:00")
         self.assert_local_window(third, "13:00", "14:00")
+
+    @patch("tasks.services.scheduler.timezone.now")
+    def test_new_task_uses_preserved_gap_without_repacking_later_tasks(self, mock_now):
+        mock_now.return_value = datetime.fromisoformat("2026-06-29T04:00:00+00:00")
+        self.set_user_schedule(time(10, 0), time(18, 0), time(18, 0), time(18, 0), time(18, 0), time(18, 0))
+        first = self.schedule_task("Task 1", 120)
+        second = self.schedule_task("Task 2", 60)
+
+        old_start = first.planned_start
+        old_end = first.planned_end
+        first.estimated_hours = 1
+        first.estimated_minutes = 60
+        first._skip_dynamic_reschedule = True
+        first.save(update_fields=["estimated_hours", "estimated_minutes"])
+        SchedulerService.cascade_reschedule_tasks(self.user, first.id, old_start, old_end)
+
+        first.refresh_from_db()
+        second.refresh_from_db()
+
+        new_task = self.create_task("New task", 60)
+        SchedulerService.cascade_reschedule_tasks(self.user, new_task.id)
+        new_task.refresh_from_db()
+
+        self.assert_local_window(first, "10:00", "11:00")
+        self.assert_local_window(new_task, "11:00", "12:00")
+        self.assert_local_window(second, "12:00", "13:00")
 
     def test_multi_day_anchored_task_spans_working_days_correctly(self):
         self.set_user_schedule(time(10, 0), time(15, 0), time(15, 0), time(15, 0), time(15, 0), time(15, 0))
