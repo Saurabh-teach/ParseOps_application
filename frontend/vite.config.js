@@ -6,10 +6,9 @@ export default defineConfig({
   base: '/',
   build: {
     outDir: 'dist',
-    rollupOptions: {
-      output: {
-        manualChunks: undefined,
-      },
-    },
+    sourcemap: false,
+  },
+  define: {
+    'import.meta.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL || 'http://localhost:8000'),
   },
 })
