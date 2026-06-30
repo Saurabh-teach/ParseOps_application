@@ -14,3 +14,6 @@ pywebpush
 python-dotenv
 Pillow
 gunicorn
+dj-database-url
+whitenoise
+channels-redis

@@ -1,0 +1,73 @@
+version: "1"
+
+services:
+  # 1. Redis Instance (Used for Celery and Channels WebSockets)
+  - type: redis
+    name: parseops-redis
+    ipAllowList: [] # only allow internal connections
+    plan: free # adjust based on needed resources
+
+  # 2. Django Backend
+  - type: web
+    name: parseops-backend
+    env: python
+    region: singapore
+    buildCommand: "./build.sh"
+    startCommand: "daphne config.asgi:application --port $PORT --bind 0.0.0.0"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: parseops-redis
+          property: connectionString
+
+  # 3. Celery Worker
+  - type: worker
+    name: parseops-celery-worker
+    env: python
+    region: singapore
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "celery -A config worker -l info"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: parseops-redis
+          property: connectionString
+
+  # 4. Celery Beat
+  - type: worker
+    name: parseops-celery-beat
+    env: python
+    region: singapore
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "celery -A config beat -l info"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: parseops-redis
+          property: connectionString
+
+  # 5. React Frontend
+  - type: static_site
+    name: parseops-frontend
+    region: singapore
+    rootDir: frontend
+    buildCommand: "npm install && npm run build"
+    publishPath: "dist"
+    envVars:
+      - key: NODE_VERSION
+        value: 18

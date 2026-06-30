@@ -26,6 +26,7 @@ if os.path.exists(_env_file):
                 _key, _val = _line.split('=', 1)
                 os.environ[_key.strip()] = _val.strip()
 
+import dj_database_url
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -74,6 +75,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -108,17 +110,10 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "parseops200",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
-        "OPTIONS": {
-            "sslmode": "disable",
-        },
-    }
+    "default": dj_database_url.config(
+        default="postgresql://postgres:postgres@127.0.0.1:5432/parseops200",
+        conn_max_age=600
+    )
 }
 
 
@@ -154,6 +149,7 @@ USE_TZ = True
 
 
 STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 
@@ -241,7 +237,14 @@ VAPID_PUBLIC_KEY = os.path.join(BASE_DIR, 'public_key.pem')
 VAPID_ADMIN_EMAIL = 'admin@parseops.com'
 
 ASGI_APPLICATION = "config.asgi.application"
-CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/1')],
+        },
+    },
+}
 
 # Microsoft OAuth Configuration
 MICROSOFT_CLIENT_ID = os.environ.get("MICROSOFT_CLIENT_ID", "mock-client-id")
@@ -255,10 +258,10 @@ FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:5173")
 # Celery Configuration
 # ──────────────────────────────────────────────────────────────────────────────
 # Broker: Redis (same Redis instance already used for caching, different DB)
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/0')
 
 # Result backend: Redis (stores task results)
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/0')
 
 # Timezone – must match Django's TIME_ZONE
 CELERY_TIMEZONE = 'UTC'
