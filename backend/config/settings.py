@@ -13,10 +13,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load environment variables from .env file safely without external dependencies
 _env_file = os.path.join(BASE_DIR, '.env')
 if os.path.exists(_env_file):
     with open(_env_file, 'r', encoding='utf-8') as _f:
@@ -28,13 +26,9 @@ if os.path.exists(_env_file):
 
 import dj_database_url
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-xz-usqdk4o1-*st_ju5mfg57&8cnmtv3023-pf#yqynmc8fj!l"
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['parseops-application.onrender.com',    
@@ -45,7 +39,6 @@ ALLOWED_HOSTS = ['parseops-application.onrender.com',
     ]
 
 
-# Application definition
 
 INSTALLED_APPS = [
     "daphne",
@@ -111,7 +104,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": dj_database_url.config(
-        default="postgresql://postgres:postgres@127.0.0.1:5432/parseops200",
+        default=os.environ.get("External_Database_URL", "postgresql://parseops_user:nEQVKiZTHB5JI4vI88HBsxt6YZYMBDem@dpg-d91ohlojs32c739pggs0-a.singapore-postgres.render.com/parseops01"),
         conn_max_age=600
     )
 }
@@ -196,9 +189,6 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'user_id',
 }
 
-# Cache Configuration
-# Using LocMemCache for development (stores in local memory, no external dependencies)
-# For production, switch back to RedisCache
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
@@ -206,18 +196,6 @@ CACHES = {
     }
 }
 
-# Redis Cache Configuration (for reference - uncomment when Redis is fixed)
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": "redis://127.0.0.1:6379/1",
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#         }
-#     }
-# }
-
-# Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -226,12 +204,10 @@ EMAIL_HOST_USER = 'bhangalesaurabh20@gmail.com'
 EMAIL_HOST_PASSWORD = 'suvcovhiiczqxsnk' 
 DEFAULT_FROM_EMAIL = 'ParseOps Security <support@parseops.com>'
 
-# Media files configuration
 import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR
 
-# VAPID Keys for Web Push Notifications
 VAPID_PRIVATE_KEY = os.path.join(BASE_DIR, 'private_key.pem')
 VAPID_PUBLIC_KEY = os.path.join(BASE_DIR, 'public_key.pem')
 VAPID_ADMIN_EMAIL = 'admin@parseops.com'
@@ -246,7 +222,6 @@ CHANNEL_LAYERS = {
     },
 }
 
-# Microsoft OAuth Configuration
 MICROSOFT_CLIENT_ID = os.environ.get("MICROSOFT_CLIENT_ID", "mock-client-id")
 MICROSOFT_CLIENT_SECRET = os.environ.get("MICROSOFT_CLIENT_SECRET", "mock-client-secret")
 MICROSOFT_REDIRECT_URI = os.environ.get("MICROSOFT_REDIRECT_URI", "http://localhost:8000/api/users/auth/microsoft/callback/")
@@ -254,24 +229,17 @@ MICROSOFT_MOCK = os.environ.get("MICROSOFT_MOCK", "True").lower() == "true"
 FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:5173")
 
 
-# ──────────────────────────────────────────────────────────────────────────────
-# Celery Configuration
-# ──────────────────────────────────────────────────────────────────────────────
-# Broker: Redis (same Redis instance already used for caching, different DB)
+
 CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/0')
 
-# Result backend: Redis (stores task results)
 CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/0')
 
-# Timezone – must match Django's TIME_ZONE
 CELERY_TIMEZONE = 'UTC'
 
-# Serialize tasks as JSON (safe, readable)
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
 
-# Store task results for 1 hour, then discard
 CELERY_RESULT_EXPIRES = 3600
 
 # Celery Beat schedule – periodic tasks
@@ -281,7 +249,6 @@ from celery.schedules import crontab
 CELERY_BEAT_SCHEDULE = {
     'auto-schedule-all-users-every-30-minutes': {
         'task': 'tasks.celery_tasks.auto_schedule_all_users',
-        # Run every 30 minutes: at minute 0 and minute 30 of every hour
         'schedule': crontab(minute='*/30'),
     },
 }
