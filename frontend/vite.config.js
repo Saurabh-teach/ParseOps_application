@@ -7,6 +7,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    minify: 'esbuild',
     rollupOptions: {
       output: {
         manualChunks: undefined,
@@ -14,6 +15,6 @@ export default defineConfig({
     },
   },
   define: {
-    'import.meta.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL),
+    'process.env': {},
   },
 })
