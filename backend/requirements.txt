@@ -13,3 +13,4 @@ requests
 pywebpush
 python-dotenv
 Pillow
+gunicorn
