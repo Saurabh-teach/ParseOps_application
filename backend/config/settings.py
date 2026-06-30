@@ -36,7 +36,12 @@ SECRET_KEY = "django-insecure-xz-usqdk4o1-*st_ju5mfg57&8cnmtv3023-pf#yqynmc8fj!l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['parseops-application.onrender.com',    
+    '.onrender.com',
+    'localhost',
+    '127.0.0.1',
+
+    ]
 
 
 # Application definition
