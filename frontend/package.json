@@ -17,7 +17,6 @@
     "@fullcalendar/timegrid": "^6.1.20",
     "axios": "^1.16.1",
     "emoji-picker-react": "^4.19.1",
-    "es-toolkit": "^1.47.0",
     "lucide-react": "^1.16.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
