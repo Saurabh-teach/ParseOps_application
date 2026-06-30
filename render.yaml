@@ -73,3 +73,7 @@ services:
         value: 18
       - key: VITE_API_URL
         value: https://parseops-backend.onrender.com
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
