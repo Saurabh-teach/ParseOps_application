@@ -71,3 +71,5 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 18
+      - key: VITE_API_URL
+        value: https://parseops-backend.onrender.com
