@@ -8,5 +8,6 @@ export default defineConfig({
     outDir: 'dist',
     minify: false,
     sourcemap: true,
+    chunkSizeWarningLimit: 1600,
   },
 })
